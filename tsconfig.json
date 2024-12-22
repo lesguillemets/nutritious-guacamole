@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		/* Language and Environment */
+		"target": "ES2020",
+		"lib": ["dom", "ES2020"],
+		"module": "ES2020",
+		"rootDir": "./src",
+		"outDir": "./js",
+		"esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+		"forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"noImplicitReturns": true,
+		/* Completeness */
+		"skipLibCheck": true                                 /* Skip type checking all .d.ts files. */,
+	},
+	"include": ["./src/**/*"],
+	"exclude": ["node_modules"]
+}
