@@ -3,10 +3,18 @@
 		/* Language and Environment */
 		"target": "ES2020",
 		"lib": ["dom", "ES2020"],
-		"module": "ES2020",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"rootDir": "./src",
 		"outDir": "./js",
 		"esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+		// Consult your bundler’s documentation
+		"customConditions": ["module"],
+		// Recommended
+		// "noEmit": false, // or `emitDeclarationOnly`
+		// "allowImportingTsExtensions": true,
+		"allowArbitraryExtensions": true,
+		"verbatimModuleSyntax": true,
 		"forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
 		"strict": true,
 		"noImplicitAny": true,

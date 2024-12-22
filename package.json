@@ -1,18 +1,18 @@
 {
   "name": "nutritious-guacamole",
   "version": "0.1.0",
-  "main": "src/main.js",
+  "main": "src/main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "author": "lesguillemets",
   "license": "UNLICENSED",
   "description": "",
-  "scripts": {
-    "build": "tsc"
-  },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "typescript": "^5.7.2"
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
   }
 }

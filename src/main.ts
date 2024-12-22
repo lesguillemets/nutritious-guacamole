@@ -1,4 +1,4 @@
-import { hi } from "./person.js"; // needs to be js
+import { hi } from "./person"; // needs to be js
 
 function init() {
 	hi();
