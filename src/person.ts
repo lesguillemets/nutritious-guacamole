@@ -20,6 +20,9 @@ export enum DayofWeek {
 	Sat = 6,
 }
 
+// 個々人の予定表．
+type PersonalCalendar = [Date, WeekDayDuty | WeekEndDuty][];
+
 // A/C を割り当てられる頻度
 export enum AssignmentAC {
 	None = "none",
@@ -41,10 +44,13 @@ export class Person {
 	// FIXME: 多分 [DayofWeek, number | asterisk] みたいな感じで週を指定したらいい
 	/** 外来日…なのだが隔週月曜は別に扱う */
 	weeklyOutP: DayofWeek | null;
-	/** 平日のシフト履歴 */
-	weekDayHistory: [Date, WeekDayDuty][] = new Array();
-	/** 休日のシフト履歴 */
-	weekEndHistory: [Date, WeekEndDuty][] = new Array();
+
+	/** シフト履歴，とりあえずクールごとにまとめたりはしない方針で */
+	history: PersonalCalendar[] = new Array();
+	// 平日・休日のシフト履歴別に持ってもいいかも…と思ったが
+	// set に紐づけた自動更新だと extend とかに追従しない？
+	// private _weekDayHistory: [Date, WeekDayDuty][] = new Array();
+	// private _weekEndHistory: [Date, WeekEndDuty][] = new Array();
 
 	// A/C を割り当てられる頻度
 	assignAC: AssignmentAC;
