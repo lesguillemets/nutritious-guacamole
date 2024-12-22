@@ -1,8 +1,9 @@
-import { hi } from "./person"; // needs to be js
+import { Person, Position } from "./person";
 
 function init() {
-	hi();
+	const a = new Person("John Yudkin", Position.Chief);
 	console.log("INIT");
+	console.log(a);
 }
 
 window.addEventListener("load", init);
