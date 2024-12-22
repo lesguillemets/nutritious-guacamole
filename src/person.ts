@@ -77,16 +77,21 @@ export class Person {
 	/** E を割り当てられる頻度 */
 	assignE: AssignmentE;
 
+	// 専従
+	ward: string | null;
+
 	constructor(
 		name: string,
 		p: Position,
 		w: DayofWeek | null = null,
+		ward: string | null = null,
 		aac?: AssignmentAC,
 		ae?: AssignmentE,
 	) {
 		this.name = name;
 		this.position = p;
 		this.weeklyOutP = w;
+		this.ward = ward;
 
 		// AssignmentAC が特に指定されなければ役職に従う
 		if (aac === undefined) {
