@@ -4,7 +4,8 @@ import { OutPDays } from "./outpatient";
 import { Person } from "./person";
 
 function init() {
-	const dep = new Department();
+	let dep = new Department();
+	console.log(`type of dep is ${typeof dep}`); // この時点で Objectなのだが
 	const wd = new OutPDays([
 		[3, null],
 		[1, [1, 3]],
@@ -21,6 +22,24 @@ function init() {
 	)! as HTMLButtonElement;
 	saveButton.addEventListener("click", (e) => {
 		downloadCurrentStatus(dep);
+	});
+
+	const prevDataF: HTMLInputElement = document.getElementById(
+		"prev-data-file",
+	)! as HTMLInputElement;
+	prevDataF.addEventListener("change", async (e) => {
+		const parsed = await loadFile();
+		if (parsed !== null) {
+			dep = parsed;
+			console.log("loaded something...");
+			console.log(dep);
+			console.log(typeof dep);
+			// JSON.parse() でとった Object は add_personを呼べない!
+			dep.add_person(new Person("Ibo", Position.PartTime));
+			console.log(dep);
+		} else {
+			errWrite("Error parsing file!");
+		}
 	});
 	console.log("INIT");
 }
@@ -42,6 +61,25 @@ function downloadCurrentStatus(dep: Department) {
 	anch.click();
 	URL.revokeObjectURL(url);
 	document.body.removeChild(anch);
+}
+
+// Blob.text() が await を返すのでここが async になる．
+// 前は FileReader.readAsText() を呼んでいたが，結局 listener な感じになるので変わらない．
+async function loadFile(): Promise<Department | null> {
+	const prevDataF: HTMLInputElement = document.getElementById(
+		"prev-data-file",
+	)! as HTMLInputElement;
+	const fl: File = prevDataF.files![0];
+	const loaded_dep: Department = await fl.text().then((txt: string) => {
+		// console.log(txt);
+		// FIXME
+		return JSON.parse(txt);
+	});
+	return loaded_dep;
+}
+
+function errWrite(s: string) {
+	document.getElementById("error-container")!.innerText = s;
 }
 
 window.addEventListener("load", init);
