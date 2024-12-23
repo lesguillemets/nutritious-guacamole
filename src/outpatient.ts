@@ -6,14 +6,14 @@ export class OutPDays {
 	// FIXME: 0-indexed のほうが統一性がある？
 	// 例えば毎週月曜・1・3週木曜なら
 	// [[DayofWeek.Mon, null], [DayofWeek.Thu, [1,3]]
-	slots: [DayofWeek, number[] | null][];
+	slots: Array<[DayofWeek, number[] | null]>;
 
-	constructor(d: [DayofWeek, number[] | null][] = []) {
+	constructor(d: Array<[DayofWeek, number[] | null]> = []) {
 		this.slots = d;
 	}
 
 	/** その日が外来日かどうか */
-	is(d: Date): boolean {
+	isOPDay(d: Date): boolean {
 		for (const wd of this.slots) {
 			// 曜日として記録があって…
 			if (d.getDay() === wd[0]) {

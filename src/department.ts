@@ -1,9 +1,9 @@
 import type { Person } from "./person";
 
 export class Department {
-	ppl: Person[];
+	ppl: Array<Person>;
 
-	constructor(ppl: Person[] = []) {
+	constructor(ppl: Array<Person> = []) {
 		this.ppl = ppl;
 	}
 
