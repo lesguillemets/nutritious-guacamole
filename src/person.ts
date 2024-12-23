@@ -48,10 +48,10 @@ export enum AssignmentE {
 }
 
 function posToAssignmentE(pos: Position): AssignmentE {
-	if (p === Position.Chief) {
+	if (pos === Position.Chief) {
 		return AssignmentE.Half;
 	}
-	if (p === Position.FullTime || p === Position.FixedTerm) {
+	if (pos === Position.FullTime || pos === Position.FixedTerm) {
 		return AssignmentE.Regular;
 	}
 	return AssignmentE.None;
