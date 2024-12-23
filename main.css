@@ -82,6 +82,12 @@ body,html {
 	align-self: center;
 }
 
+#debug-button-a-container {
+	grid-area: cb-bl;
+	justify-self: center;
+	align-self: center;
+}
+
 #exec-button-container {
 	grid-area: cb-centre;
 	justify-self: center;

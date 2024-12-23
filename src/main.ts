@@ -17,11 +17,19 @@ function init() {
 	dep.add_person(new Person("Maruyama", Position.FixedTerm));
 	dep.add_person(new Person("Takano", Position.PartTime));
 	console.log(dep);
+
 	const saveButton: HTMLButtonElement = document.getElementById(
 		"save-button",
 	)! as HTMLButtonElement;
 	saveButton.addEventListener("click", (e) => {
 		downloadCurrentStatus(dep);
+	});
+
+	const debugButtonA: HTMLButtonElement = document.getElementById(
+		"debug-button-a",
+	)! as HTMLButtonElement;
+	debugButtonA.addEventListener("click", (e) => {
+		downloadCurrentMemberList(dep);
 	});
 
 	const prevDataF: HTMLInputElement = document.getElementById(
@@ -42,6 +50,25 @@ function init() {
 		}
 	});
 	console.log("INIT");
+}
+
+function downloadCurrentMemberList(dep: Department) {
+	const blob = new Blob([dep.genMemberListTSV()], {
+		type: "text/tab-separated-values;charset=utf-8",
+	});
+	const url = URL.createObjectURL(blob);
+	const anch = document.createElement("a");
+	anch.setAttribute("href", url);
+	const ts: Date = new Date();
+	anch.setAttribute(
+		"download",
+		`NutGuacamoleMembersList-${dateToTimeStampString(ts)}`,
+	);
+	anch.style.display = "none";
+	document.body.appendChild(anch);
+	anch.click();
+	URL.revokeObjectURL(url);
+	document.body.removeChild(anch);
 }
 
 function downloadCurrentStatus(dep: Department) {

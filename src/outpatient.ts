@@ -1,4 +1,4 @@
-import type { DayofWeek } from "./base";
+import { DayofWeek } from "./base";
 
 /** 外来業務 */
 export class OutPDays {
@@ -10,6 +10,22 @@ export class OutPDays {
 
 	constructor(d: Array<[DayofWeek, number[] | null]> = []) {
 		this.slots = d;
+	}
+
+	/** 見やすいstring に；
+	 * Mon・Thu(1・3週)  みたいな*/
+	toString(): string {
+		const result: Array<string> = [];
+		for (const sl of this.slots) {
+			const dayName = DayofWeek[sl[0]];
+			if (sl[1] === null) {
+				result.push(dayName);
+			} else {
+				const weeks = sl[1].join(",");
+				result.push(`${dayName}(${weeks}週)`);
+			}
+		}
+		return result.join("・");
 	}
 
 	/** その日が外来日かどうか */

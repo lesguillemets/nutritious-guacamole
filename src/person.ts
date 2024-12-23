@@ -73,4 +73,17 @@ export class Person {
 		// 役職は上が先に来るようにしておく
 		return thisP - otherP;
 	}
+
+	/** Department.genMemberListTSV での使用を想定して，
+	 * tsv ファイルの一行の形になる */
+	toMemberListTSVLine(): string {
+		return [
+			`${this.name}`,
+			`${this.position}`,
+			`${this.ward === null ? "" : this.ward}`,
+			`${this.outPDays.toString()}`,
+			`${this.assignAC}`,
+			`${this.assignE}`,
+		].join("\t");
+	}
 }
