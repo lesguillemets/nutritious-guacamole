@@ -7,11 +7,34 @@
 </head>
 <body>
 	<div class="container">
-		<div class="main-header">header</div>
+		<div class="main-header">
+			<div class="date-selecter-container">
+				扱う日付を選択：
+				<label for="date-start">ここから</label>
+				<input type="date" id="date-start" name="date-start" value="">
+				<label for="date-start">ここまで</label>
+				<input type="date" id="date-start" name="date-start" value="">
+			</div>
+		</div>
 		<div class="main-content">content</div>
-		<div class="right-head">head</div>
+		<div class="right-head">
+			<div class="error-msg" id="error-container">（エラーがあればここ）</div>
+		</div>
 		<div class="right-pane">pane</div>
-		<div class="right-foot">foot</div>
+		<div class="right-foot">
+			<div class="control-buttons">
+				<div id="prev-data-container">
+					<label for="prev-data-file">ファイル読み込み</label>
+					<input type="file" id="prev-data-file" name="prev-data-file" value="">
+				</div>
+				<div id="exec-button-container">
+					<button id="exec-button" class="normal-button">実行</button>
+				</div>
+				<div id="save-button-container">
+					<button id="save-button" class="normal-button">保存</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	<script type="module" src="./js/bundle.js"></script>
 </body>

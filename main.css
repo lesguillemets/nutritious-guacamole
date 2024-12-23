@@ -18,7 +18,7 @@ body,html {
 	align-items: stretch;
 	justify-items: stretch;
 	grid-template-columns: 4fr 1fr;
-	grid-template-rows: 1fr 9fr 2fr;
+	grid-template-rows: 1fr 9fr 3fr;
 	grid-auto-flow: column;
 	grid-template-areas:
 	"main-header  right-head"
@@ -45,4 +45,49 @@ body,html {
 
 .right-foot {
 	grid-area: right-foot;
+}
+
+.date-selecter-container {
+	margin:0.5em;
+}
+
+.control-buttons {
+	width: 100%;
+	height:100%;
+	padding: 3px;
+	display: grid;
+	align-items: stretch;
+	justify-items: stretch;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 4em 1fr 1fr;
+	grid-auto-flow: row;
+	grid-template-areas:
+	"cb-load cb-load cb-load"
+	"cb-left cb-centre cb-right"
+	"cb-bl cb-bc cb-br"
+}
+
+#prev-data-container {
+	grid-area: cb-load;
+}
+
+.normal-button {
+	border-radius: 7px;
+	padding:10px;
+}
+
+#save-button-container {
+	grid-area: cb-bc;
+	justify-self: center;
+	align-self: center;
+}
+
+#exec-button-container {
+	grid-area: cb-centre;
+	justify-self: center;
+	align-self: center;
+}
+.error-msg {
+	color: OliveDrab;
+	font-weight: bold;
 }
