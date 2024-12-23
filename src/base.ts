@@ -7,6 +7,42 @@ export enum Position {
 	PartTime = "非常勤",
 }
 
+export namespace Position {
+	export function toInt(p: Position): number {
+		switch (p) {
+			case Position.DepMan:
+				return 0;
+			case Position.Chief:
+				return 1;
+			case Position.FullTime:
+				return 2;
+			case Position.FixedTerm:
+				return 3;
+			case Position.PartTime:
+				return 3;
+			default:
+				return Number.NaN;
+		}
+	}
+
+	export function fromInt(n: number): Position | undefined {
+		switch (n) {
+			case 0:
+				return Position.DepMan;
+			case 1:
+				return Position.Chief;
+			case 2:
+				return Position.FullTime;
+			case 3:
+				return Position.FixedTerm;
+			case 4:
+				return Position.PartTime;
+			default:
+				return undefined;
+		}
+	}
+}
+
 /** Sun(0) - start, conforming to Date.prototype.getDay() */
 export enum DayofWeek {
 	Sun = 0,

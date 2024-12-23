@@ -1,7 +1,7 @@
 import {
 	type AssignmentAC,
 	type AssignmentE,
-	type Position,
+	Position,
 	posToAssignmentAC,
 	posToAssignmentE,
 } from "./base";
@@ -60,5 +60,30 @@ export class Person {
 		} else {
 			this.assignE = ae;
 		}
+	}
+
+	cmp(other: Person): number {
+		const thisP = Position.toInt(this.position);
+		const otherP = Position.toInt(other.position);
+		if (thisP === otherP) {
+			// TODO: とりあえず役職だけで並び変える．
+			// stable なので悪くないはず
+			return 0;
+		}
+		// 役職は上が先に来るようにしておく
+		return thisP - otherP;
+	}
+}
+
+export class Department {
+	ppl: Person[];
+
+	constructor(ppl: Person[] = []) {
+		this.ppl = ppl;
+	}
+
+	add_person(p: Person) {
+		this.ppl.push(p);
+		this.ppl.sort((a, b) => a.cmp(b));
 	}
 }
