@@ -1,4 +1,5 @@
-import { Person, Position } from "./person";
+import { Position } from "./base";
+import { Person } from "./person";
 
 function init() {
 	const a = new Person("John Yudkin", Position.Chief);
