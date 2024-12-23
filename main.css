@@ -1,3 +1,48 @@
+*{
+	box-sizing: border-box;
+}
+
+/* https://stackoverflow.com/q/44645465 */
+body,html {
+	margin:0;
+	padding:0;
+}
+
 .container {
+	width: 100vw;
+	height:100vh;
+	margin:0;
+	padding:0;
+	gap: 0;
 	display: grid;
+	align-items: stretch;
+	justify-items: stretch;
+	grid-template-columns: 4fr 1fr;
+	grid-template-rows: 1fr 9fr 2fr;
+	grid-auto-flow: column;
+	grid-template-areas:
+	"main-header  right-head"
+	"main-content right-pane"
+	"main-content right-foot";
+}
+
+.main-header {
+	grid-area: main-header;
+
+}
+
+.main-content {
+	grid-area: main-content;
+}
+
+.right-head {
+	grid-area: right-head;
+}
+
+.right-pane {
+	grid-area: right-pane;
+}
+
+.right-foot {
+	grid-area: right-foot;
 }
