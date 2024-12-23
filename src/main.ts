@@ -1,6 +1,7 @@
 import { Position } from "./base";
+import { Department } from "./department";
 import { OutPDays } from "./outpatient";
-import { Department, Person } from "./person";
+import { Person } from "./person";
 
 function init() {
 	const dep = new Department();
