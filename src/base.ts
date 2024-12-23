@@ -87,3 +87,13 @@ export function posToAssignmentE(pos: Position): AssignmentE {
 	}
 	return AssignmentE.None;
 }
+
+export function dateToTimeStampString(ts: Date): string {
+	const yyyy = ts.getFullYear();
+	const mm = (ts.getMonth() + 1).toString().padStart(2, "0");
+	const dd = ts.getDate().toString().padStart(2, "0");
+	const hh = ts.getHours().toString().padStart(2, "0");
+	const MM = ts.getMinutes().toString().padStart(2, "0");
+	const ss = ts.getSeconds();
+	return `${yyyy}${mm}${dd}-${hh}${MM}${ss}`;
+}
