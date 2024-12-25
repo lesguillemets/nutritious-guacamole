@@ -76,4 +76,48 @@ export class Department {
 	genProposedCalenderHTML(): string {
 		return this._genProposedCalendarFormatted().toHtmlTable();
 	}
+
+	/** history を表形式で返す．
+	 * 実質 _genProposedCalendar() と共通なのだが，パッといい抽象化が浮かばなくて
+	 * 重複したコードを許すことにする．
+	 * Person.history は今 Calendar の Array だけど，それは単に横に並べてしまう．
+	 * */
+	_genHistoryCalendar(): TableLike<Duty | Name, Date | null> {
+		// FIXME: not yet confirmed
+		if (this.ppl.length === 0) {
+			// if noone is here, return none
+			return new TableLike([]);
+		}
+		const dates: Array<Date> = this.ppl[0].history.flatMap((c) => c.getDays());
+		const header = [null, ...dates];
+		const body = [];
+		for (const p of this.ppl) {
+			const duties = p.history.flatMap((c) => c.getDuties());
+			body.push([p.name, ...duties]);
+		}
+		return new TableLike(body, header);
+	}
+
+	_genHistoryCalendarFormatted(): TableLike<string, string> {
+		const fmtHead = (d: Date | null) => {
+			if (d === null) {
+				return "";
+			}
+			return dateFormat(d, "yyyy-MM-dd");
+		};
+		const fmtBody = (d: Duty | Name) => {
+			if (typeof d === "string") {
+				return d;
+			}
+			return dutyToShortString(d);
+		};
+		return this._genProposedCalendar().formatHead(fmtHead).formatDat(fmtBody);
+	}
+
+	genHistoryCalendarTSV(): string {
+		return this._genProposedCalendarFormatted().toTsv();
+	}
+	genHistoryCalenderHTML(): string {
+		return this._genProposedCalendarFormatted().toHtmlTable();
+	}
 }
