@@ -23,16 +23,16 @@ export class PersonalCalendar {
 		}
 		const firstDay: Date = this.cal.at(0)![0];
 		const lastDay: Date = this.cal.at(-1)![0];
-		if (differenceInDays(lastDay, firstDay) +1 !== this.cal.length){
+		if (differenceInDays(lastDay, firstDay) + 1 !== this.cal.length) {
 			console.log("PersonalCalendar.getRange::differenceError ");
 		}
 		return [firstDay, lastDay];
 	}
 
 	getDays(): Array<Date> {
-		return this.cal.map( (dd) => dd[0] );
+		return this.cal.map((dd) => dd[0]);
 	}
 	getDuties(): Array<WeekDayDuty | WeekEndDuty> {
-		return this.cal.map( (dd) => dd[1] );
+		return this.cal.map((dd) => dd[1]);
 	}
 }

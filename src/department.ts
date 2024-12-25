@@ -33,7 +33,7 @@ export class Department {
 	/** current proposed を表形式で返す．
 	 * 個々人がデータを持ってるのに変な話だが，
 	 * みんな揃った日付のカレンダーを持ってることを仮定してしまう */
-	_genProposedCalendar(): TableLike<string, Date|null> {
+	_genProposedCalendar(): TableLike<string, Date | null> {
 		// FIXME: not yet confirmed
 		if (this.ppl.length === 0) {
 			// if noone is here, return none
@@ -42,7 +42,7 @@ export class Department {
 		const dates: Array<Date> = this.ppl[0].proposed.getDays();
 		const header = [null, ...dates];
 		const body = [];
-		for(const p of this.ppl) {
+		for (const p of this.ppl) {
 			const duties = p.proposed.getDuties();
 			body.push([p.name, ...duties]);
 		}

@@ -17,8 +17,10 @@ export enum WeekEndDuty {
 	E = 1,
 }
 
+// TODO: Object にしたほうが良い？
+
 export function dutyToShortString(d: Duty): string {
-	switch(d) {
+	switch (d) {
 		case WeekDayDuty.A:
 			return "A";
 		case WeekDayDuty.C:
@@ -37,6 +39,30 @@ export function dutyToShortString(d: Duty): string {
 			return "E";
 		default:
 			console.log("dutyToShortString::unreachable");
+			break;
+	}
+}
+
+export function shortStringToDuty(s: string): Duty | undefined {
+	switch (s) {
+		case "A":
+			return WeekDayDuty.A;
+		case "C":
+			return WeekDayDuty.C;
+		case "外":
+			return WeekDayDuty.G;
+		case "棟":
+			return WeekDayDuty.W;
+		case "休":
+			return WeekDayDuty.Leave;
+		case "・":
+			return WeekDayDuty.Other;
+		case " ":
+			return WeekEndDuty.X;
+		case "E":
+			return WeekEndDuty.E;
+		default:
+			console.log("shortStringToDuty::unreachable");
 			break;
 	}
 }
