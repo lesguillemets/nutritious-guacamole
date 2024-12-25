@@ -1,4 +1,6 @@
-import { TableLike } from "./base";
+import { format as dateFormat } from "date-fns";
+import { type Name, TableLike } from "./base";
+import { type Duty, dutyToShortString } from "./duty";
 import type { Person } from "./person";
 
 export class Department {
@@ -32,8 +34,10 @@ export class Department {
 
 	/** current proposed を表形式で返す．
 	 * 個々人がデータを持ってるのに変な話だが，
-	 * みんな揃った日付のカレンダーを持ってることを仮定してしまう */
-	_genProposedCalendar(): TableLike<string, Date | null> {
+	 * みんな揃った日付のカレンダーを持ってることを仮定してしまう
+	 * 最初の行が [null, Date, Date, 本体は [Name, Duty, Duty...]
+	 * */
+	_genProposedCalendar(): TableLike<Duty | Name, Date | null> {
 		// FIXME: not yet confirmed
 		if (this.ppl.length === 0) {
 			// if noone is here, return none
@@ -49,11 +53,27 @@ export class Department {
 		return new TableLike(body, header);
 	}
 
+	_genProposedCalendarFormatted(): TableLike<string, string> {
+		const fmtHead = (d: Date | null) => {
+			if (d === null) {
+				return "";
+			}
+			return dateFormat(d, "yyyy-MM-dd");
+		};
+		const fmtBody = (d: Duty | Name) => {
+			if (typeof d === "string") {
+				return d;
+			}
+			return dutyToShortString(d);
+		};
+		return this._genProposedCalendar().formatHead(fmtHead).formatDat(fmtBody);
+	}
+
 	genProposedCalendarTSV(): string {
-		return this._genProposedCalendar().toTsv();
+		return this._genProposedCalendarFormatted().toTsv();
 	}
 	// TODO: もうちょっとまとめられる？
 	genProposedCalenderHTML(): string {
-		return this._genProposedCalendar().toHtmlTable();
+		return this._genProposedCalendarFormatted().toHtmlTable();
 	}
 }

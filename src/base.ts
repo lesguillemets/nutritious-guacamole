@@ -116,6 +116,19 @@ export class TableLike<T, U> {
 		this.header = header;
 	}
 
+	formatDat(fmt: (d: T) => string): TableLike<string, U> {
+		const d: Array<Array<string>> = [];
+		for (const row of this.dat) {
+			d.push(row.map(fmt));
+		}
+		return new TableLike(d, this.header);
+	}
+
+	formatHead(fmt: (d: U) => string): TableLike<T, string> {
+		const newHeader = this.header === null ? null : this.header.map(fmt);
+		return new TableLike(this.dat, newHeader);
+	}
+
 	toTsv(): string {
 		const rows = [];
 		if (this.header !== null) {
