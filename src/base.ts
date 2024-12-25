@@ -88,6 +88,8 @@ export function posToAssignmentE(pos: Position): AssignmentE {
 	return AssignmentE.None;
 }
 
+/** 日付を yyyymmdd-hhMMss の形式で返す
+ * @param {Date} ts 対象の日付 */
 export function dateToTimeStampString(ts: Date): string {
 	const yyyy = ts.getFullYear();
 	const mm = (ts.getMonth() + 1).toString().padStart(2, "0");
@@ -101,12 +103,13 @@ export function dateToTimeStampString(ts: Date): string {
 /** 要素の2次元配列を，基本的には Array.join() を使って
  * 表示しやすい表形式にするクラス
  * 実際の representation は Array<Array<T>> 側が
- * 面倒を見る構造の，ごく薄い層 */
-export class TableLike<T> {
+ * 面倒を見る構造の，ごく薄い層
+ * @type TableLike<T,U> T:データの型 U: ヘッダの型*/
+export class TableLike<T, U> {
 	dat: Array<Array<T>>;
-	header: Array<string> | null;
+	header: Array<U> | null;
 
-	constructor(dat: Array<Array<T>>, header: Array<string> | null = null) {
+	constructor(dat: Array<Array<T>>, header: Array<U> | null = null) {
 		this.dat = dat;
 		this.header = header;
 	}
