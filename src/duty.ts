@@ -1,4 +1,7 @@
 /** 平日のお仕事の区分 */
+
+export type Duty = WeekDayDuty | WeekEndDuty;
+
 export enum WeekDayDuty {
 	A = "A",
 	C = "C",
@@ -12,4 +15,28 @@ export enum WeekDayDuty {
 export enum WeekEndDuty {
 	X = 0,
 	E = 1,
+}
+
+export function dutyToShortString(d: Duty): string {
+	switch(d) {
+		case WeekDayDuty.A:
+			return "A";
+		case WeekDayDuty.C:
+			return "C";
+		case WeekDayDuty.G:
+			return "外";
+		case WeekDayDuty.W:
+			return "棟";
+		case WeekDayDuty.Leave:
+			return "休";
+		case WeekDayDuty.Other:
+			return "・";
+		case WeekEndDuty.X:
+			return " ";
+		case WeekEndDuty.E:
+			return "E";
+		default:
+			console.log("dutyToShortString::unreachable");
+			break;
+	}
 }

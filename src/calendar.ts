@@ -28,4 +28,11 @@ export class PersonalCalendar {
 		}
 		return [firstDay, lastDay];
 	}
+
+	getDays(): Array<Date> {
+		return this.cal.map( (dd) => dd[0] );
+	}
+	getDuties(): Array<WeekDayDuty | WeekEndDuty> {
+		return this.cal.map( (dd) => dd[1] );
+	}
 }
