@@ -76,7 +76,7 @@ export class Person {
 
 	/** Department.genMemberListTSV での使用を想定して，
 	 * tsv ファイルの一行の形になる */
-	toMemberListTSVLine(): Array<string> {
+	toMemberListLine(): Array<string> {
 		return [
 			`${this.name}`,
 			`${this.position}`,

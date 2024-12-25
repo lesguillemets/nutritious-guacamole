@@ -111,7 +111,7 @@ export class TableLike<T> {
 		this.header = header;
 	}
 
-	to_tsv(): string {
+	toTsv(): string {
 		const rows = [];
 		if (this.header !== null) {
 			rows.push(this.header.join("\t"));
@@ -130,7 +130,7 @@ export class TableLike<T> {
 	/** 仮．
 	 * table の方には class とかつけたくなる気がするので内側だけ．
 	 * これも単に string で作る形になってる */
-	to_html_table(): string {
+	toHtmlTable(): string {
 		const rows = [];
 		if (this.header !== null) {
 			rows.push("<thead><tr>");

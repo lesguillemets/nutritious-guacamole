@@ -13,19 +13,18 @@ export class Department {
 		this.ppl.sort((a, b) => a.cmp(b));
 	}
 
-	/** 人のリストを tsv 形式で返す．
+	/** 人のリストを表的な形式で返す
 	 * 名前，形態，病棟，外来，A/C，E */
-	genMemberListTSV(): string {
+	_genMemberList(): TableLike<string> {
 		const header: Array<string> = ["名前", "形態", "病棟", "外来", "A/C", "E"];
-		const dat = this.ppl.map((p) => p.toMemberListTSVLine());
-		const tb = new TableLike(dat, header);
-		return tb.to_tsv();
+		const dat = this.ppl.map((p) => p.toMemberListLine());
+		return new TableLike(dat, header);
 	}
-	// TODO: ここ共通化したいよね
+	genMemberListTSV(): string {
+		return this._genMemberList().toTsv();
+	}
+	// TODO: もうちょっとまとめられる？
 	genMemberListHTML(): string {
-		const header: Array<string> = ["名前", "形態", "病棟", "外来", "A/C", "E"];
-		const dat = this.ppl.map((p) => p.toMemberListTSVLine());
-		const tb = new TableLike(dat, header);
-		return tb.to_html_table();
+		return this._genMemberList().toHtmlTable();
 	}
 }
