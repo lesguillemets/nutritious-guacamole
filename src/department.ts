@@ -33,7 +33,7 @@ export class Department {
 	/** current proposed を表形式で返す．
 	 * 個々人がデータを持ってるのに変な話だが，
 	 * みんな揃った日付のカレンダーを持ってることを仮定してしまう */
-	_genProposedTable(): TableLike<string, string> {
+	_genProposedTable(): TableLike<string, Date|null> {
 		// TODO
 		return new TableLike([]);
 	}
