@@ -2,6 +2,8 @@ import type { AssignmentAC, AssignmentE } from "./base";
 
 import type { WeekDayDuty, WeekEndDuty } from "./duty";
 
+import { differenceInDays } from "date-fns";
+
 type DateDutyArray = Array<[Date, WeekDayDuty | WeekEndDuty]>;
 /** 個々人の予定表．*/
 export class PersonalCalendar {
@@ -19,6 +21,11 @@ export class PersonalCalendar {
 		if (this.cal.length === 0) {
 			return undefined;
 		}
-		return [this.cal[0][0], this.cal[this.cal.length - 1][0]];
+		const firstDay: Date = this.cal.at(0)![0];
+		const lastDay: Date = this.cal.at(-1)![0];
+		if (differenceInDays(lastDay, firstDay) +1 !== this.cal.length){
+			console.log("PersonalCalendar.getRange::differenceError ");
+		}
+		return [firstDay, lastDay];
 	}
 }
