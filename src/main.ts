@@ -64,7 +64,7 @@ function downloadCurrentMemberList(dep: Department) {
 	const ts: Date = new Date();
 	anch.setAttribute(
 		"download",
-		`NutGuacamoleMembersList-${dateToTimeStampString(ts)}`,
+		`NutGuacamoleMembersList-${dateToTimeStampString(ts)}.tsv`,
 	);
 	anch.style.display = "none";
 	document.body.appendChild(anch);
@@ -83,7 +83,7 @@ function downloadCurrentStatus(dep: Department) {
 	const ts: Date = new Date();
 	anch.setAttribute(
 		"download",
-		`NutGuacamoleData-${dateToTimeStampString(ts)}`,
+		`NutGuacamoleData-${dateToTimeStampString(ts)}.json`,
 	);
 	anch.style.display = "none";
 	document.body.appendChild(anch);
