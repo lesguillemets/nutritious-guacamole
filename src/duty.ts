@@ -39,7 +39,7 @@ export function dutyToShortString(d: Duty): string {
 			return "E";
 		default:
 			console.log("dutyToShortString::unreachable");
-			break;
+			return "!!!!!!!";
 	}
 }
 
@@ -62,7 +62,6 @@ export function shortStringToDuty(s: string): Duty | undefined {
 		case "E":
 			return WeekEndDuty.E;
 		default:
-			console.log("shortStringToDuty::unreachable");
-			break;
+			return undefined;
 	}
 }

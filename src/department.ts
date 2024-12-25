@@ -50,10 +50,10 @@ export class Department {
 	}
 
 	genProposedCalendarTSV(): string {
-		return this._genProposedCalender().toTsv();
+		return this._genProposedCalendar().toTsv();
 	}
 	// TODO: もうちょっとまとめられる？
 	genProposedCalenderHTML(): string {
-		return this._genProposedCalender().toHtmlTable();
+		return this._genProposedCalendar().toHtmlTable();
 	}
 }
