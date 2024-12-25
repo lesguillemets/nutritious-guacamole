@@ -100,49 +100,49 @@ export function dateToTimeStampString(ts: Date): string {
 
 /** 要素の2次元配列を，基本的には Array.join() を使って
  * 表示しやすい表形式にするクラス
-* 実際の representation は Array<Array<T>> 側が
-* 面倒を見る構造の，ごく薄い層 */
+ * 実際の representation は Array<Array<T>> 側が
+ * 面倒を見る構造の，ごく薄い層 */
 export class TableLike<T> {
 	dat: Array<Array<T>>;
 	header: Array<string> | null;
 
-	constructor(
-		dat: Array<Array<T>>,
-		header: Array<string>|null = null) {
+	constructor(dat: Array<Array<T>>, header: Array<string> | null = null) {
 		this.dat = dat;
 		this.header = header;
 	}
 
-	to_tsv() : string {
+	to_tsv(): string {
 		const rows = [];
 		if (this.header !== null) {
-			rows.push(this.header.join('\t'));
+			rows.push(this.header.join("\t"));
 		}
 		for (const r of this.dat) {
 			// if (isTableRowLike(r)) {
 			// 	// それ用のメソッドがあるときは使う
 			// 	rows.push(r.toTableRow().join('\t'));
 			// } else {
-				rows.push(r.join('\t'));
+			rows.push(r.join("\t"));
 			// }
 		}
 		return rows.join("\n");
 	}
 
 	/** 仮．
-	* table の方には class とかつけたくなる気がするので内側だけ．
-	* これも単に string で作る形になってる */
+	 * table の方には class とかつけたくなる気がするので内側だけ．
+	 * これも単に string で作る形になってる */
 	to_html_table(): string {
 		const rows = [];
 		if (this.header !== null) {
 			rows.push("<thead><tr>");
-			rows.push(this.header.map( (headerItem) => `\t<th>${headerItem}</th>`).join("\n"));
+			rows.push(
+				this.header.map((headerItem) => `\t<th>${headerItem}</th>`).join("\n"),
+			);
 			rows.push("</tr></thead>");
 		}
 		rows.push("<tbody>");
 		for (const r of this.dat) {
 			rows.push("<tr>");
-			rows.push(r.map( (i) => `\t<td>${i}</td>`).join("\n"));
+			rows.push(r.map((i) => `\t<td>${i}</td>`).join("\n"));
 			rows.push("</tr>");
 		}
 		rows.push("</tbody>");
@@ -150,17 +150,15 @@ export class TableLike<T> {
 	}
 }
 
-
 /** Table として扱う時に，その行になりうるもの．
-* toTableRow が，各アイテムを含む配列を返す
-* …と思ったけど，複数の表現の仕方が文脈依存で存在するので，
-* あんまりデータ側にこういうメソッドを生やす意味は薄いかも
-* */
+ * toTableRow が，各アイテムを含む配列を返す
+ * …と思ったけど，複数の表現の仕方が文脈依存で存在するので，
+ * あんまりデータ側にこういうメソッドを生やす意味は薄いかも
+ * */
 export interface TableRowLike {
 	toTableRow(): Array<string>;
 }
 
 export function isTableRowLike(obj: any): obj is TableRowLike {
-	return 'toTableRow' in obj;
+	return "toTableRow" in obj;
 }
-
