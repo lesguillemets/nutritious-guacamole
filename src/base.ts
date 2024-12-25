@@ -8,6 +8,7 @@ export enum Position {
 }
 
 export type Name = string;
+export type Ward = string | null;
 
 export namespace Position {
 	export function toInt(p: Position): number {

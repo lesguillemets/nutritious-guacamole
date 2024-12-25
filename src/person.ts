@@ -3,6 +3,7 @@ import {
 	type AssignmentE,
 	type Name,
 	Position,
+	type Ward,
 	posToAssignmentAC,
 	posToAssignmentE,
 } from "./base";
@@ -33,13 +34,13 @@ export class Person {
 	assignE: AssignmentE;
 
 	// 専従
-	ward: string | null;
+	ward: Ward;
 
 	constructor(
 		name: Name,
 		p: Position,
 		w: OutPDays = new OutPDays(),
-		ward: string | null = null,
+		ward: Ward = null,
 		aac?: AssignmentAC,
 		ae?: AssignmentE,
 	) {
