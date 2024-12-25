@@ -1,6 +1,7 @@
 import {
 	type AssignmentAC,
 	type AssignmentE,
+	type Name,
 	Position,
 	posToAssignmentAC,
 	posToAssignmentE,
@@ -11,7 +12,7 @@ import { OutPDays } from "./outpatient";
 
 export class Person {
 	// お名前，かつこれで区別するので一意であってほしい
-	name: string;
+	name: Name;
 	position: Position; // 役職
 	/** 外来日…なのだが隔週月曜は別に扱う */
 	outPDays: OutPDays;
@@ -35,7 +36,7 @@ export class Person {
 	ward: string | null;
 
 	constructor(
-		name: string,
+		name: Name,
 		p: Position,
 		w: OutPDays = new OutPDays(),
 		ward: string | null = null,

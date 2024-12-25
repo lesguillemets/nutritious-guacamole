@@ -7,6 +7,8 @@ export enum Position {
 	PartTime = "非常勤",
 }
 
+export type Name = string;
+
 export namespace Position {
 	export function toInt(p: Position): number {
 		switch (p) {
