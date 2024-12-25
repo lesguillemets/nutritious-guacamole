@@ -56,6 +56,8 @@ function downloadCurrentMemberList(dep: Department) {
 	const blob = new Blob([dep.genMemberListTSV()], {
 		type: "text/tab-separated-values;charset=utf-8",
 	});
+	const mb = document.getElementById("main-box")!;
+	mb.innerHTML = `<table>\n${dep.genMemberListHTML()}\n</table>`;
 	const url = URL.createObjectURL(blob);
 	const anch = document.createElement("a");
 	anch.setAttribute("href", url);
