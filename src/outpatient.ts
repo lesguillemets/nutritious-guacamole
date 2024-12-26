@@ -28,7 +28,7 @@ export class OutPDays {
 		return result.join("・");
 	}
 
-	fromString(s: string): OutPDays | undefined {
+	static fromString(s: string): OutPDays | undefined {
 		const slots: Array<[DayofWeek, number[] | null]> = [];
 		for (const sl of s.split("・")) {
 			const d0 = DayofWeek.fromString(sl);
