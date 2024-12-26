@@ -101,14 +101,24 @@ body,html {
 	padding:10px;
 }
 
-#save-button-container {
-	grid-area: cb-bc;
+.save-button-container {
+	grid-area: cb-right;
 	justify-self: center;
 	align-self: center;
 }
 
 #debug-button-a-container {
 	grid-area: cb-bl;
+	justify-self: center;
+	align-self: center;
+}
+#debug-button-b-container {
+	grid-area: cb-bc;
+	justify-self: center;
+	align-self: center;
+}
+#debug-button-c-container {
+	grid-area: cb-br;
 	justify-self: center;
 	align-self: center;
 }
