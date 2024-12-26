@@ -1,10 +1,5 @@
-import {
-	type AssignmentAC,
-	type AssignmentE,
-	type Name,
-	TableLike,
-	type Ward,
-} from "./base";
+import type { AssignmentAC, AssignmentE } from "./assignment";
+import { type Name, TableLike, type Ward } from "./base";
 import { PersonalCalendar } from "./calendar";
 import { Department } from "./department";
 import { type Duty, WeekDayDuty, WeekEndDuty, dutyToShortString } from "./duty";

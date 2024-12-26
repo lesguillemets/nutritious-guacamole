@@ -1,4 +1,4 @@
-import type { AssignmentAC, AssignmentE } from "./base";
+import type { AssignmentAC, AssignmentE } from "./assignment";
 
 import type { WeekDayDuty, WeekEndDuty } from "./duty";
 

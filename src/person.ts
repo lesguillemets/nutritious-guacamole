@@ -1,11 +1,10 @@
 import {
 	type AssignmentAC,
 	type AssignmentE,
-	type Name,
-	type Ward,
 	posToAssignmentAC,
 	posToAssignmentE,
-} from "./base";
+} from "./assignment";
+import type { Name, Ward } from "./base";
 import { PersonalCalendar } from "./calendar";
 import type { WeekDayDuty, WeekEndDuty } from "./duty";
 import { OutPDays } from "./outpatient";
