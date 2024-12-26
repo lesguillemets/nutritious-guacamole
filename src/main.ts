@@ -1,7 +1,8 @@
-import { Position, dateToTimeStampString } from "./base";
+import { dateToTimeStampString } from "./base";
 import { Department } from "./department";
 import { OutPDays } from "./outpatient";
 import { Person } from "./person";
+import { Position } from "./position";
 
 function init() {
 	let dep = new Department();

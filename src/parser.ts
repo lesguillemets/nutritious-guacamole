@@ -2,7 +2,6 @@ import {
 	type AssignmentAC,
 	type AssignmentE,
 	type Name,
-	Position,
 	TableLike,
 	type Ward,
 } from "./base";
@@ -11,6 +10,7 @@ import { Department } from "./department";
 import { type Duty, WeekDayDuty, WeekEndDuty, dutyToShortString } from "./duty";
 import { OutPDays } from "./outpatient";
 import type { Person } from "./person";
+import { Position } from "./position";
 
 /** genMemberListTSV() の双対．型通りのリストを返す．あとは proposed と history があれば Person になる
  * @param s: TSV 形式，ヘッダ含む*/

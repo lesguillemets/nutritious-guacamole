@@ -2,7 +2,6 @@ import {
 	type AssignmentAC,
 	type AssignmentE,
 	type Name,
-	Position,
 	type Ward,
 	posToAssignmentAC,
 	posToAssignmentE,
@@ -10,6 +9,7 @@ import {
 import { PersonalCalendar } from "./calendar";
 import type { WeekDayDuty, WeekEndDuty } from "./duty";
 import { OutPDays } from "./outpatient";
+import { Position } from "./position";
 
 export class Person {
 	// お名前，かつこれで区別するので一意であってほしい
