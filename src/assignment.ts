@@ -33,3 +33,33 @@ export function posToAssignmentE(pos: Position): AssignmentE {
 	}
 	return AssignmentE.None;
 }
+
+export namespace AssignmentAC {
+	export function fromString(s: string): AssignmentAC | undefined {
+		switch (s) {
+			case "none":
+				return AssignmentAC.None;
+			case "biweekly":
+				return AssignmentAC.BiWeekly;
+			case "regular":
+				return AssignmentAC.Regular;
+			default:
+				return undefined;
+		}
+	}
+}
+
+export namespace AssignmentE {
+	export function fromString(s: string): AssignmentE | undefined {
+		switch (s) {
+			case "none":
+				return AssignmentE.None;
+			case "once in two cours":
+				return AssignmentE.Half;
+			case "regular":
+				return AssignmentE.Regular;
+			default:
+				return undefined;
+		}
+	}
+}
