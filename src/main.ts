@@ -34,7 +34,7 @@ function init() {
 	});
 
 	const prevDataF: HTMLInputElement = document.getElementById(
-		"prev-data-file",
+		"other-data-file",
 	)! as HTMLInputElement;
 	prevDataF.addEventListener("change", async (e) => {
 		const parsed = await loadFile();

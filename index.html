@@ -20,16 +20,27 @@
 			content
 			<div id="main-box"></div>
 		</div>
+		<div class="main-footer">
+			<div class="mf-l" id="member-list-loader">
+				<label for="member-list-file">スタッフ一覧読み込み</label>
+				<input type="file" id="member-list-file" name="member-list-file" value="">
+			</div>
+			<div class="mf-c" id="prev-shift-loader">
+				<label for="prev-shift-file">前回シフト読み込み</label>
+				<input type="file" id="prev-shift-file" name="prev-shift-file" value="">
+			</div>
+			<div class="mf-r" id="other-data-loader">
+				<label for="other-data-file">全体データ読み込み</label>
+				<input type="file" id="other-data-file" name="other-data-file" value="">
+			</div>
+		</div>
 		<div class="right-head">
 			<div class="error-msg" id="error-container">（エラーがあればここ）</div>
 		</div>
 		<div class="right-pane">pane</div>
 		<div class="right-foot">
 			<div class="control-buttons">
-				<div id="prev-data-container">
-					<label for="prev-data-file">ファイル読み込み</label>
-					<input type="file" id="prev-data-file" name="prev-data-file" value="">
-				</div>
+				<div class="rightfoot-top">Controls</div>
 				<div id="exec-button-container">
 					<button id="exec-button" class="normal-button">実行</button>
 				</div>
