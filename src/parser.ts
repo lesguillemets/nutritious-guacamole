@@ -23,6 +23,7 @@ function parseMemberListTsv(
 		const dats: Array<string> = lines[i].split("\t");
 		const name: Name = dats[0];
 		const position: Position = Position.fromString(dats[1])!;
+		const ward: Ward = dats[2] || null;
 		const outp: OutPDays = OutPDays.fromString(dats[3])!;
 	}
 	return undefined;
