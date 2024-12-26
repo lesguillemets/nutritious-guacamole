@@ -45,8 +45,8 @@ export namespace Position {
 		}
 	}
 
-	export function fromString(s: string) : Position | undefined {
-		switch(s){
+	export function fromString(s: string): Position | undefined {
+		switch (s) {
 			case "副部長":
 				return Position.DepMan;
 			case "主任":
@@ -74,7 +74,7 @@ export enum DayofWeek {
 	Sat = 6,
 }
 export namespace DayofWeek {
-	export function fromString(s: string): DayofWeek|undefined {
+	export function fromString(s: string): DayofWeek | undefined {
 		return undefined;
 		// return(DayofWeek[s as keyof typeof DayofWeek]);
 	}
