@@ -13,7 +13,7 @@ export class OutPDays {
 	}
 
 	/** 見やすいstring に；
-	 * Mon・Thu(1・3週)  みたいな*/
+	 * Mon・Thu(1,3週)  みたいな*/
 	toString(): string {
 		const result: Array<string> = [];
 		for (const sl of this.slots) {
@@ -26,6 +26,22 @@ export class OutPDays {
 			}
 		}
 		return result.join("・");
+	}
+
+	fromString(s: string): OutPDays|undefined {
+		const slots:Array<[DayofWeek, number[] | null]> = [];
+		for (const sl of s.split("・")) {
+			const d0 =DayofWeek.fromString(sl) ;
+			if (d0 !== undefined) {
+				// Sun(1,3週) とかじゃなくて Sun のとき
+				slots.push([d0!, null]);
+			} else {
+				const day = DayofWeek.fromString(sl.slice(0,3))!; // Mon とか
+				const weeks: Array<number> = sl.slice(4).slice(0,-2).split(',').map( (n) => Number.parseInt(n,10) );
+				slots.push([day, weeks]);
+			}
+		}
+		return new OutPDays(slots);
 	}
 
 	/** その日が外来日かどうか */

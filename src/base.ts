@@ -44,6 +44,23 @@ export namespace Position {
 				return undefined;
 		}
 	}
+
+	export function fromString(s: string) : Position | undefined {
+		switch(s){
+			case "副部長":
+				return Position.DepMan;
+			case "主任":
+				return Position.Chief;
+			case "常勤":
+				return Position.FullTime;
+			case "有期雇用":
+				return Position.FixedTerm;
+			case "非常勤":
+				return Position.PartTime;
+			default:
+				return undefined;
+		}
+	}
 }
 
 /** Sun(0) - start, conforming to Date.prototype.getDay() */
@@ -55,6 +72,12 @@ export enum DayofWeek {
 	Thu = 4,
 	Fri = 5,
 	Sat = 6,
+}
+export namespace DayofWeek {
+	export function fromString(s: string): DayofWeek|undefined {
+		return undefined;
+		// return(DayofWeek[s as keyof typeof DayofWeek]);
+	}
 }
 
 // A/C を割り当てられる頻度
