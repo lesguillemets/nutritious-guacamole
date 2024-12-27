@@ -1,5 +1,4 @@
 import { Position } from "./position";
-
 export type Name = string;
 export type Ward = string | null;
 
@@ -15,7 +14,27 @@ export enum DayofWeek {
 }
 export namespace DayofWeek {
 	export function fromString(s: string): DayofWeek | undefined {
-		return undefined;
+		switch (s) {
+			case "Sun":
+				return DayofWeek.Sun;
+			case "Mon":
+				return DayofWeek.Mon;
+			case "Tue":
+				return DayofWeek.Tue;
+			case "Wed":
+				return DayofWeek.Wed;
+			case "Thu":
+				return DayofWeek.Thu;
+			case "Fri":
+				return DayofWeek.Fri;
+			case "Sat":
+				return DayofWeek.Sat;
+			default:
+				console.log(
+					`debug: DayofWeek::fromString(${s}) is returning undefined`,
+				);
+				return undefined;
+		}
 		// return(DayofWeek[s as keyof typeof DayofWeek]);
 	}
 }
