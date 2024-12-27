@@ -35,7 +35,6 @@ export class Person {
 	/** E を割り当てられる頻度 */
 	assignE: AssignmentE;
 
-
 	constructor(
 		name: Name,
 		p: Position,

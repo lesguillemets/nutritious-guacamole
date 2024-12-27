@@ -13,7 +13,7 @@ function init() {
 	]);
 	dep.add_person(new Person("Kamo", Position.FullTime, undefined, wd));
 	dep.add_person(new Person("John Yudkin", Position.Chief));
-	dep.add_person(new Person("Yura", Position.FullTime,  "N100" ));
+	dep.add_person(new Person("Yura", Position.FullTime, "N100"));
 	dep.add_person(new Person("Yodo", Position.FullTime));
 	dep.add_person(new Person("Maruyama", Position.FixedTerm));
 	dep.add_person(new Person("Takano", Position.PartTime));
@@ -33,11 +33,11 @@ function init() {
 		downloadCurrentMemberList(dep);
 	});
 
-	const prevDataF: HTMLInputElement = document.getElementById(
-		"other-data-file",
-	)! as HTMLInputElement;
-	prevDataF.addEventListener("change", async (e) => {
-		const parsed = await loadFile();
+	const execButton: HTMLButtonElement = document.getElementById(
+		"exec-button",
+	)! as HTMLButtonElement;
+	execButton.addEventListener("click", async (e) => {
+		const parsed = await loadFiles();
 		if (parsed !== null) {
 			dep = parsed;
 			console.log("loaded something...");
@@ -50,6 +50,12 @@ function init() {
 			errWrite("Error parsing file!");
 		}
 	});
+	const prevDataF: HTMLInputElement = document.getElementById(
+		"other-data-file",
+	)! as HTMLInputElement;
+	prevDataF.addEventListener("change", async (e) => {
+		console.log(e);
+	});
 	console.log("INIT");
 }
 
@@ -59,7 +65,7 @@ function init() {
  * @param fName: string ファイル名
  * @param s: string ダウンロードする内容
  */
-function doDownload( mimeType:string, fName: string, s: string,) {
+function doDownload(mimeType: string, fName: string, s: string) {
 	const blob = new Blob([s], { type: mimeType });
 	const url = URL.createObjectURL(blob);
 	const anch = document.createElement("a");
@@ -77,7 +83,7 @@ function doDownload( mimeType:string, fName: string, s: string,) {
  * @param fNameBase: string これに接頭辞とタイムスタンプをつけてファイル名にします
  * @param s: string ダウンロードする内容
  */
-function doDownloadAsTsv(fNameBase: string, timeStamp: Date, s:string,) {
+function doDownloadAsTsv(fNameBase: string, timeStamp: Date, s: string) {
 	doDownload(
 		"text/tab-separated-values;charset=utf-8",
 		`NutGuacamole-${fNameBase}-${dateToTimeStampString(timeStamp)}.tsv`,
@@ -85,21 +91,21 @@ function doDownloadAsTsv(fNameBase: string, timeStamp: Date, s:string,) {
 	);
 }
 
-function setMainHTML(s: string){
+function setMainHTML(s: string) {
 	const mb = document.getElementById("main-box")!;
-	console.log({"innerHTML": mb.innerHTML});
+	console.log({ innerHTML: mb.innerHTML });
 	mb.innerHTML = s;
 }
 
-function downloadAll(dep:Department) {
+function downloadAll(dep: Department) {
 	const timeStamp: Date = new Date();
 	const [ml, prev, otherData] = dep.toStrings();
-	doDownloadAsTsv("MembersList", timeStamp,ml);
+	doDownloadAsTsv("MembersList", timeStamp, ml);
 	doDownloadAsTsv("CurrentShift", timeStamp, prev);
 	doDownload(
 		"application/json;charset=utf-8",
 		`NutGuacamole-OtherData-${dateToTimeStampString(timeStamp)}.json`,
-		otherData
+		otherData,
 	);
 }
 
@@ -107,7 +113,6 @@ function downloadCurrentMemberList(dep: Department) {
 	const timeStamp: Date = new Date();
 	doDownloadAsTsv("MembersList", timeStamp, dep.genMemberListTSV());
 }
-
 
 function downloadCurrentAsJson(dep: Department) {
 	const blob = new Blob([JSON.stringify(dep)], {
@@ -130,17 +135,34 @@ function downloadCurrentAsJson(dep: Department) {
 
 // Blob.text() が await を返すのでここが async になる．
 // 前は FileReader.readAsText() を呼んでいたが，結局 listener な感じになるので変わらない．
-async function loadFile(): Promise<Department | null> {
-	const prevDataF: HTMLInputElement = document.getElementById(
-		"prev-data-file",
+async function loadFiles(): Promise<Department | null> {
+	// スタッフ一覧
+	const memberListF: HTMLInputElement = document.getElementById(
+		"member-list-file",
 	)! as HTMLInputElement;
-	const fl: File = prevDataF.files![0];
-	const loaded_dep: Department = await fl.text().then((txt: string) => {
-		// console.log(txt);
-		// FIXME
-		return JSON.parse(txt);
+	const mlf: File = memberListF.files![0];
+
+	// 直近データ
+	const prevShiftF: HTMLInputElement = document.getElementById(
+		"prev-shift-file",
+	)! as HTMLInputElement;
+	const psf: File = prevShiftF.files![0];
+
+	// その他の分
+	const otherDataF: HTMLInputElement = document.getElementById(
+		"other-data-file",
+	)! as HTMLInputElement;
+	const odf: File = otherDataF.files![0];
+
+	const loaded_dep: Department | undefined = await Promise.all([
+		mlf.text(),
+		psf.text(),
+		odf.text(),
+	]).then((txts: Array<string>) => {
+		return Department.fromStrings(txts[0], txts[1], txts[2]);
 	});
-	return loaded_dep;
+	console.log(loaded_dep);
+	return loaded_dep || null;
 }
 
 function errWrite(s: string) {
