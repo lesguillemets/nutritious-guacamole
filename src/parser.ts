@@ -10,37 +10,33 @@ import {
 	shortStringToDuty,
 } from "./duty";
 import { OutPDays } from "./outpatient";
-import type { Person } from "./person";
+import { Person } from "./person";
 import { Position } from "./position";
 
 import { parse as parseDate } from "date-fns";
 
-/** genMemberListTSV() の双対．型通りのリストを返す．あとは proposed と history があれば Person になる
+/** genMemberListTSV() の双対．型通りのリストを返す．
+ * proposed と history は面倒を見ておらず，後から設定してください．
  * @param s: TSV 形式，ヘッダ含む*/
-function parseMemberListTsv(
-	s: string,
-):
-	| Array<[Name, Position, Ward, OutPDays, AssignmentAC, AssignmentE]>
-	| undefined {
+export function parseMemberListTsv(s: string): Array<Person> | undefined {
+	// Array<[Name, Position, Ward, OutPDays, AssignmentAC, AssignmentE]> を返していたが
 	const lines: Array<string> = s.split("\n");
+	const ppl: Array<Person> = [];
 	// i=0 は header なので飛ばす
-	const ppl: Array<
-		[Name, Position, Ward, OutPDays, AssignmentAC, AssignmentE]
-	> = [];
 	for (let i = 1; i < lines.length; i++) {
 		const dats: Array<string> = lines[i].split("\t");
 		const name: Name = dats[0];
 		const position: Position = Position.fromString(dats[1])!;
 		const ward: Ward = dats[2] || null;
 		const outp: OutPDays = OutPDays.fromString(dats[3])!;
-		const ac: AssignmentAC = AssignmentAC.fromString(dats[4])!;
-		const ae: AssignmentE = AssignmentE.fromString(dats[5])!;
-		ppl.push([name, position, ward, outp, ac, ae]);
+		const ac: AssignmentAC | undefined = AssignmentAC.fromString(dats[4]);
+		const ae: AssignmentE | undefined = AssignmentE.fromString(dats[5]);
+		ppl.push(new Person(name, position, ward, outp, ac, ae));
 	}
 	return ppl;
 }
 
-function parseDepartmentCalender(
+export function parseDepartmentCalendar(
 	s: string,
 ): Array<[Name, PersonalCalendar]> | undefined {
 	const lines: Array<string> = s.split("\n");

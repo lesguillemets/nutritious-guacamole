@@ -1,6 +1,8 @@
 import { format as dateFormat } from "date-fns";
 import { type Name, TableLike } from "./base";
+import type { PersonalCalendar } from "./calendar";
 import { type Duty, dutyToShortString } from "./duty";
+import { parseDepartmentCalendar, parseMemberListTsv } from "./parser";
 import type { Person } from "./person";
 
 export class Department {
@@ -13,6 +15,51 @@ export class Department {
 	add_person(p: Person) {
 		this.ppl.push(p);
 		this.ppl.sort((a, b) => a.cmp(b));
+	}
+
+	static fromStrings(
+		memberList: string,
+		prevShift: string,
+		otherDataJ: string,
+	): Department | undefined {
+		const members: Array<Person> = parseMemberListTsv(memberList)!;
+		const prevCal: Array<[Name, PersonalCalendar]> =
+			parseDepartmentCalendar(prevShift)!;
+		const otherData: { depHistory: string } = JSON.parse(otherDataJ);
+		const depHistory = parseDepartmentCalendar(otherData.depHistory)!;
+		const ppl: Array<Person> = [];
+		for (const m of members) {
+			const name: Name = m.name;
+			// 何故かこっちは通らない: at が | string を返すことになってる?
+			// const thisCal: PersonalCalendar | undefined = prevCal.find( (c) => {c[0] === name} )?.at(1);
+			const thisCal: [Name, PersonalCalendar] | undefined = prevCal.find(
+				(c) => {
+					c[0] === name;
+				},
+			);
+			const history: [Name, PersonalCalendar] | undefined = depHistory.find(
+				(c) => {
+					c[0] === name;
+				},
+			);
+			if (thisCal !== undefined) {
+				m.proposed = thisCal[1];
+			}
+			if (history !== undefined) {
+				m.history.push(history[1]);
+			}
+		}
+		return new Department(ppl);
+	}
+
+	/** 外部への出力用．メンバのリスト，前回分，その他のデータ，をこの順で返す．
+	 * @returns: [メンバリスト(tsv), 前回分(tsv), その他(json)]
+	 * その他，は { depHistory: history(tsv):string } の形式 */
+	toStrings(): [string, string, string] {
+		const ml = this.genMemberListTSV();
+		const prev = this.genProposedCalendarTSV();
+		const hist = this.genHistoryCalendarTSV();
+		return [ml, prev, JSON.stringify({ depHistory: hist })];
 	}
 
 	/** 人のリストを表的な形式で返す
