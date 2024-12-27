@@ -11,7 +11,7 @@ export enum WeekDayDuty {
 	Other = "Other", // 現実的には B か F
 }
 
-// 休日のduty. Eかなし (X) か
+/** 休日のduty. Eかなし (X) か */
 export enum WeekEndDuty {
 	X = 0,
 	E = 1,

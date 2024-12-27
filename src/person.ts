@@ -6,9 +6,11 @@ import {
 } from "./assignment";
 import type { Name, Ward } from "./base";
 import { PersonalCalendar } from "./calendar";
-import type { WeekDayDuty, WeekEndDuty } from "./duty";
+import { type Duty, WeekDayDuty, WeekEndDuty } from "./duty";
 import { OutPDays } from "./outpatient";
 import { Position } from "./position";
+
+import { addDays, differenceInDays, isWeekend } from "date-fns";
 
 export class Person {
 	// お名前，かつこれで区別するので一意であってほしい
@@ -17,7 +19,7 @@ export class Person {
 	/** 専従 */
 	ward: Ward;
 
-	/** 外来日…なのだが隔週月曜は別に扱う */
+	/** 外来日 */
 	outPDays: OutPDays;
 
 	/** 今回のクールの割り当て．後から変更がありうるので別枠で覚えておく */
@@ -87,5 +89,30 @@ export class Person {
 			`${this.assignAC}`,
 			`${this.assignE}`,
 		];
+	}
+
+	defaultCalendar(from: Date, to: Date): PersonalCalendar {
+		const dates: Array<[Date, Duty]> = [];
+		for (let d = from; d <= to; d = addDays(d, 1)) {
+			let duty: Duty;
+			// 週末のデフォルトは X
+			if (isWeekend(d)) {
+				duty = WeekEndDuty.X;
+			} else {
+				// 平日のデフォルトは，
+				if (this.outPDays.isOPDay(d)) {
+					// 外来があれば外来
+					duty = WeekDayDuty.G;
+				} else if (this.ward !== null) {
+					// 病棟専従があればそっち
+					duty = WeekDayDuty.W;
+				} else {
+					// 外来も病棟もなければデフォルトはBかFかその辺
+					duty = WeekDayDuty.Other;
+				}
+			}
+			dates.push([d, duty]);
+		}
+		return new PersonalCalendar(dates);
 	}
 }

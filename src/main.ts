@@ -30,6 +30,15 @@ function init() {
 		const parsed = await loadFiles();
 		if (parsed !== null) {
 			dep = parsed;
+			for (const p of dep.ppl) {
+				p.proposed = p.defaultCalendar(
+					new Date(2024, 10, 17),
+					new Date(2024, 11, 14),
+				);
+				p.history = [
+					p.defaultCalendar(new Date(2024, 9, 20), new Date(2024, 10, 16)),
+				];
+			}
 			console.log("loaded something...");
 			console.log(dep);
 		} else {
@@ -49,7 +58,9 @@ function init() {
 	const execButton: HTMLButtonElement = document.getElementById(
 		"exec-button",
 	)! as HTMLButtonElement;
-	execButton.addEventListener("click", async (e) => { await tryLoad(); });
+	execButton.addEventListener("click", async (e) => {
+		await tryLoad();
+	});
 
 	console.log("INIT");
 }
