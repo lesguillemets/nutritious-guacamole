@@ -112,10 +112,8 @@ function setMainHTML(s: string) {
 	mb.innerHTML = s;
 }
 
-function showCurrentCalender(dep: Department){
-	setMainHTML(
-		`<table>${dep.genProposedCalenderHTML()}</table>`
-	);
+function showCurrentCalender(dep: Department) {
+	setMainHTML(`<table>${dep.genProposedCalenderHTML()}</table>`);
 }
 
 function downloadAll(dep: Department) {
