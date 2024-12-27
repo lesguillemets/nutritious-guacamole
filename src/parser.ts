@@ -60,7 +60,9 @@ export function parseDepartmentCalendar(
 		.slice(1)
 		.map((d) => parseDate(d, "yyyy-MM-dd", new Date()));
 	const cals: Array<[Name, PersonalCalendar]> = [];
-	for (const row of lines.slice(1)) {
+	for (const row of lines.slice(1).filter((v) => {
+		return v !== "";
+	})) {
 		const dat = row.split("\t");
 		if (dat.length !== dates.length + 1) {
 			console.log("ERROR on parseDepartmentCalendar");
