@@ -27,7 +27,6 @@ export class Department {
 			parseDepartmentCalendar(prevShift)!;
 		const otherData: { depHistory: string } = JSON.parse(otherDataJ);
 		const depHistory = parseDepartmentCalendar(otherData.depHistory)!;
-		const ppl: Array<Person> = [];
 		for (const m of members) {
 			const name: Name = m.name;
 			// 何故かこっちは通らない: at が | string を返すことになってる?
@@ -49,7 +48,7 @@ export class Department {
 				m.history.push(history[1]);
 			}
 		}
-		return new Department(ppl);
+		return new Department(members);
 	}
 
 	/** 外部への出力用．メンバのリスト，前回分，その他のデータ，をこの順で返す．

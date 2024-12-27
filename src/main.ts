@@ -1,12 +1,12 @@
 import { dateToTimeStampString } from "./base";
 import { Department } from "./department";
 import { OutPDays } from "./outpatient";
+import { parseMemberListTsv } from "./parser";
 import { Person } from "./person";
 import { Position } from "./position";
 
 function init() {
 	let dep = new Department();
-	console.log(`type of dep is ${typeof dep}`); // この時点で Objectなのだが
 	const wd = new OutPDays([
 		[3, null],
 		[1, [1, 3]],
@@ -42,20 +42,11 @@ function init() {
 			dep = parsed;
 			console.log("loaded something...");
 			console.log(dep);
-			console.log(typeof dep);
-			// JSON.parse() でとった Object は add_personを呼べない!
-			dep.add_person(new Person("Ibo", Position.PartTime));
-			console.log(dep);
 		} else {
 			errWrite("Error parsing file!");
 		}
 	});
-	const prevDataF: HTMLInputElement = document.getElementById(
-		"other-data-file",
-	)! as HTMLInputElement;
-	prevDataF.addEventListener("change", async (e) => {
-		console.log(e);
-	});
+
 	console.log("INIT");
 }
 
@@ -159,6 +150,8 @@ async function loadFiles(): Promise<Department | null> {
 		psf.text(),
 		odf.text(),
 	]).then((txts: Array<string>) => {
+		console.log("HI! tried parsingthe member list;");
+		console.log(parseMemberListTsv(txts[0]));
 		return Department.fromStrings(txts[0], txts[1], txts[2]);
 	});
 	console.log(loaded_dep);
