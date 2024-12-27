@@ -26,17 +26,7 @@ function init() {
 		downloadAll(dep);
 	});
 
-	const debugButtonA: HTMLButtonElement = document.getElementById(
-		"debug-button-a",
-	)! as HTMLButtonElement;
-	debugButtonA.addEventListener("click", (e) => {
-		downloadCurrentMemberList(dep);
-	});
-
-	const execButton: HTMLButtonElement = document.getElementById(
-		"exec-button",
-	)! as HTMLButtonElement;
-	execButton.addEventListener("click", async (e) => {
+	async function tryLoad() {
 		const parsed = await loadFiles();
 		if (parsed !== null) {
 			dep = parsed;
@@ -45,7 +35,21 @@ function init() {
 		} else {
 			errWrite("Error parsing file!");
 		}
+	}
+
+	const debugButtonA: HTMLButtonElement = document.getElementById(
+		"debug-button-a",
+	)! as HTMLButtonElement;
+	debugButtonA.addEventListener("click", async (e) => {
+		await tryLoad().then(() => {
+			setMainHTML(`<table>${dep.genMemberListHTML()}</table>`);
+		});
 	});
+
+	const execButton: HTMLButtonElement = document.getElementById(
+		"exec-button",
+	)! as HTMLButtonElement;
+	execButton.addEventListener("click", async (e) => { await tryLoad(); });
 
 	console.log("INIT");
 }
