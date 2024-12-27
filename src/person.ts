@@ -1,18 +1,22 @@
 import {
 	type AssignmentAC,
 	type AssignmentE,
-	Position,
 	posToAssignmentAC,
 	posToAssignmentE,
-} from "./base";
+} from "./assignment";
+import type { Name, Ward } from "./base";
 import { PersonalCalendar } from "./calendar";
 import type { WeekDayDuty, WeekEndDuty } from "./duty";
 import { OutPDays } from "./outpatient";
+import { Position } from "./position";
 
 export class Person {
 	// お名前，かつこれで区別するので一意であってほしい
-	name: string;
+	name: Name;
 	position: Position; // 役職
+	/** 専従 */
+	ward: Ward;
+
 	/** 外来日…なのだが隔週月曜は別に扱う */
 	outPDays: OutPDays;
 
@@ -31,21 +35,18 @@ export class Person {
 	/** E を割り当てられる頻度 */
 	assignE: AssignmentE;
 
-	// 専従
-	ward: string | null;
-
 	constructor(
-		name: string,
+		name: Name,
 		p: Position,
+		ward: Ward = null,
 		w: OutPDays = new OutPDays(),
-		ward: string | null = null,
 		aac?: AssignmentAC,
 		ae?: AssignmentE,
 	) {
 		this.name = name;
 		this.position = p;
-		this.outPDays = w;
 		this.ward = ward;
+		this.outPDays = w;
 
 		// AssignmentAC が特に指定されなければ役職に従う
 		if (aac === undefined) {
@@ -77,6 +78,7 @@ export class Person {
 	/** Department.genMemberListTSV での使用を想定して，
 	 * tsv ファイルの一行の形になる */
 	toMemberListLine(): Array<string> {
+		// あとは this.proposed と this.history があればOK!!!
 		return [
 			`${this.name}`,
 			`${this.position}`,

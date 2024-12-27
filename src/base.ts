@@ -1,47 +1,7 @@
-// XXX: 結構例外が多くてこれだけでは何を降っていいのか決まらない XXX
-export enum Position {
-	DepMan = "副部長",
-	Chief = "主任",
-	FullTime = "常勤",
-	FixedTerm = "有期雇用",
-	PartTime = "非常勤",
-}
+import { Position } from "./position";
 
-export namespace Position {
-	export function toInt(p: Position): number {
-		switch (p) {
-			case Position.DepMan:
-				return 0;
-			case Position.Chief:
-				return 1;
-			case Position.FullTime:
-				return 2;
-			case Position.FixedTerm:
-				return 3;
-			case Position.PartTime:
-				return 3;
-			default:
-				return Number.NaN;
-		}
-	}
-
-	export function fromInt(n: number): Position | undefined {
-		switch (n) {
-			case 0:
-				return Position.DepMan;
-			case 1:
-				return Position.Chief;
-			case 2:
-				return Position.FullTime;
-			case 3:
-				return Position.FixedTerm;
-			case 4:
-				return Position.PartTime;
-			default:
-				return undefined;
-		}
-	}
-}
+export type Name = string;
+export type Ward = string | null;
 
 /** Sun(0) - start, conforming to Date.prototype.getDay() */
 export enum DayofWeek {
@@ -53,41 +13,15 @@ export enum DayofWeek {
 	Fri = 5,
 	Sat = 6,
 }
-
-// A/C を割り当てられる頻度
-export enum AssignmentAC {
-	None = "none",
-	BiWeekly = "biweekly",
-	Regular = "regular",
+export namespace DayofWeek {
+	export function fromString(s: string): DayofWeek | undefined {
+		return undefined;
+		// return(DayofWeek[s as keyof typeof DayofWeek]);
+	}
 }
 
-export function posToAssignmentAC(pos: Position): AssignmentAC {
-	if (pos === Position.Chief) {
-		return AssignmentAC.BiWeekly;
-	}
-	if (pos === Position.FullTime) {
-		return AssignmentAC.Regular;
-	}
-	return AssignmentAC.None;
-}
-
-// E を割り当てられる頻度
-export enum AssignmentE {
-	None = "none",
-	Half = "once in two cours",
-	Regular = "regular",
-}
-
-export function posToAssignmentE(pos: Position): AssignmentE {
-	if (pos === Position.Chief) {
-		return AssignmentE.Half;
-	}
-	if (pos === Position.FullTime || pos === Position.FixedTerm) {
-		return AssignmentE.Regular;
-	}
-	return AssignmentE.None;
-}
-
+/** 日付を yyyymmdd-hhMMss の形式で返す
+ * @param {Date} ts 対象の日付 */
 export function dateToTimeStampString(ts: Date): string {
 	const yyyy = ts.getFullYear();
 	const mm = (ts.getMonth() + 1).toString().padStart(2, "0");
@@ -101,14 +35,28 @@ export function dateToTimeStampString(ts: Date): string {
 /** 要素の2次元配列を，基本的には Array.join() を使って
  * 表示しやすい表形式にするクラス
  * 実際の representation は Array<Array<T>> 側が
- * 面倒を見る構造の，ごく薄い層 */
-export class TableLike<T> {
+ * 面倒を見る構造の，ごく薄い層
+ * @type TableLike<T,U> T:データの型 U: ヘッダの型*/
+export class TableLike<T, U> {
 	dat: Array<Array<T>>;
-	header: Array<string> | null;
+	header: Array<U> | null;
 
-	constructor(dat: Array<Array<T>>, header: Array<string> | null = null) {
+	constructor(dat: Array<Array<T>>, header: Array<U> | null = null) {
 		this.dat = dat;
 		this.header = header;
+	}
+
+	formatDat(fmt: (d: T) => string): TableLike<string, U> {
+		const d: Array<Array<string>> = [];
+		for (const row of this.dat) {
+			d.push(row.map(fmt));
+		}
+		return new TableLike(d, this.header);
+	}
+
+	formatHead(fmt: (d: U) => string): TableLike<T, string> {
+		const newHeader = this.header === null ? null : this.header.map(fmt);
+		return new TableLike(this.dat, newHeader);
 	}
 
 	toTsv(): string {
