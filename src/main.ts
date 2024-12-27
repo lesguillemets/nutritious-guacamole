@@ -23,7 +23,7 @@ function init() {
 		"save-button",
 	)! as HTMLButtonElement;
 	saveButton.addEventListener("click", (e) => {
-		downloadCurrentStatus(dep);
+		downloadAll(dep);
 	});
 
 	const debugButtonA: HTMLButtonElement = document.getElementById(
@@ -53,20 +53,19 @@ function init() {
 	console.log("INIT");
 }
 
-function downloadCurrentMemberList(dep: Department) {
-	const blob = new Blob([dep.genMemberListTSV()], {
-		type: "text/tab-separated-values;charset=utf-8",
-	});
-	const mb = document.getElementById("main-box")!;
-	mb.innerHTML = `<table>\n${dep.genMemberListHTML()}\n</table>`;
+/**
+ * 文字列で与えられたデータをダウンロードします．
+ * @param mimeType: string mimeType として指定する文字列
+ * @param fName: string ファイル名
+ * @param s: string ダウンロードする内容
+ */
+function doDownload( mimeType:string, fName: string, s: string,) {
+	const blob = new Blob([s], { type: mimeType });
 	const url = URL.createObjectURL(blob);
 	const anch = document.createElement("a");
 	anch.setAttribute("href", url);
 	const ts: Date = new Date();
-	anch.setAttribute(
-		"download",
-		`NutGuacamoleMembersList-${dateToTimeStampString(ts)}.tsv`,
-	);
+	anch.setAttribute("download", fName);
 	anch.style.display = "none";
 	document.body.appendChild(anch);
 	anch.click();
@@ -74,7 +73,43 @@ function downloadCurrentMemberList(dep: Department) {
 	document.body.removeChild(anch);
 }
 
-function downloadCurrentStatus(dep: Department) {
+/** 文字列で与えられたデータを tsv としてダウンロード
+ * @param fNameBase: string これに接頭辞とタイムスタンプをつけてファイル名にします
+ * @param s: string ダウンロードする内容
+ */
+function doDownloadAsTsv(fNameBase: string, timeStamp: Date, s:string,) {
+	doDownload(
+		"text/tab-separated-values;charset=utf-8",
+		`NutGuacamole-${fNameBase}-${dateToTimeStampString(timeStamp)}.tsv`,
+		s,
+	);
+}
+
+function setMainHTML(s: string){
+	const mb = document.getElementById("main-box")!;
+	console.log({"innerHTML": mb.innerHTML});
+	mb.innerHTML = s;
+}
+
+function downloadAll(dep:Department) {
+	const timeStamp: Date = new Date();
+	const [ml, prev, otherData] = dep.toStrings();
+	doDownloadAsTsv("MembersList", timeStamp,ml);
+	doDownloadAsTsv("CurrentShift", timeStamp, prev);
+	doDownload(
+		"application/json;charset=utf-8",
+		`NutGuacamole-OtherData-${dateToTimeStampString(timeStamp)}.json`,
+		otherData
+	);
+}
+
+function downloadCurrentMemberList(dep: Department) {
+	const timeStamp: Date = new Date();
+	doDownloadAsTsv("MembersList", timeStamp, dep.genMemberListTSV());
+}
+
+
+function downloadCurrentAsJson(dep: Department) {
 	const blob = new Blob([JSON.stringify(dep)], {
 		type: "application/json;charset=utf-8",
 	});
