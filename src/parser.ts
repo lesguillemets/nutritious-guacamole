@@ -29,7 +29,13 @@ export function parseMemberListTsv(s: string): Array<Person> | undefined {
 	const ppl: Array<Person> = [];
 	// i=0 は header なので飛ばす
 	for (let i = 1; i < lines.length; i++) {
+		// FIXME
+		if (lines[i] === "") {
+			// ファイル末尾の \n で切るとここで空の文字列が最後に残る
+			continue;
+		}
 		const dats: Array<string> = lines[i].split("\t");
+		// console.log(`calling parser::parseMemberListTsv::fori(${dats})`);
 		const name: Name = dats[0];
 		const position: Position = Position.fromString(dats[1])!;
 		const ward: Ward = dats[2] || null;
