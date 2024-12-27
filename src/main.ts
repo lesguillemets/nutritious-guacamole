@@ -55,6 +55,15 @@ function init() {
 		});
 	});
 
+	const showShiftButton: HTMLButtonElement = document.getElementById(
+		"debug-button-b",
+	)! as HTMLButtonElement;
+	showShiftButton.addEventListener("click", async (e) => {
+		await tryLoad().then(() => {
+			showCurrentCalender(dep);
+		});
+	});
+
 	const execButton: HTMLButtonElement = document.getElementById(
 		"exec-button",
 	)! as HTMLButtonElement;
@@ -101,6 +110,12 @@ function setMainHTML(s: string) {
 	const mb = document.getElementById("main-box")!;
 	console.log({ innerHTML: mb.innerHTML });
 	mb.innerHTML = s;
+}
+
+function showCurrentCalender(dep: Department){
+	setMainHTML(
+		`<table>${dep.genProposedCalenderHTML()}</table>`
+	);
 }
 
 function downloadAll(dep: Department) {
