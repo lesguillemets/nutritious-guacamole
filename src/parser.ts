@@ -15,12 +15,17 @@ import { Position } from "./position";
 
 import { parse as parseDate } from "date-fns";
 
+const DEBUG = true;
+
 /** genMemberListTSV() の双対．型通りのリストを返す．
  * proposed と history は面倒を見ておらず，後から設定してください．
  * @param s: TSV 形式，ヘッダ含む*/
 export function parseMemberListTsv(s: string): Array<Person> | undefined {
 	// Array<[Name, Position, Ward, OutPDays, AssignmentAC, AssignmentE]> を返していたが
 	const lines: Array<string> = s.split(/\r?\n/);
+	if (DEBUG) {
+		console.log("LINES ARE!", lines);
+	}
 	const ppl: Array<Person> = [];
 	// i=0 は header なので飛ばす
 	for (let i = 1; i < lines.length; i++) {

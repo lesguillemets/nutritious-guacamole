@@ -1,5 +1,7 @@
 import { DayofWeek } from "./base";
 
+const DEBUG = true;
+
 /** 外来業務 */
 export class OutPDays {
 	// [曜日, [第n週]] (1-indexed) という形式にした．
@@ -29,6 +31,9 @@ export class OutPDays {
 	}
 
 	static fromString(s: string): OutPDays | undefined {
+		if (s === "") {
+			return new OutPDays([]);
+		}
 		const slots: Array<[DayofWeek, number[] | null]> = [];
 		for (const sl of s.split("・")) {
 			const d0 = DayofWeek.fromString(sl);
