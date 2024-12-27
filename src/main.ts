@@ -11,9 +11,9 @@ function init() {
 		[3, null],
 		[1, [1, 3]],
 	]);
-	dep.add_person(new Person("Kamo", Position.FullTime, wd));
+	dep.add_person(new Person("Kamo", Position.FullTime, undefined, wd));
 	dep.add_person(new Person("John Yudkin", Position.Chief));
-	dep.add_person(new Person("Yura", Position.FullTime, undefined, "N100"));
+	dep.add_person(new Person("Yura", Position.FullTime,  "N100" ));
 	dep.add_person(new Person("Yodo", Position.FullTime));
 	dep.add_person(new Person("Maruyama", Position.FixedTerm));
 	dep.add_person(new Person("Takano", Position.PartTime));

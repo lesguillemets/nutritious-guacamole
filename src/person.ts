@@ -14,6 +14,9 @@ export class Person {
 	// お名前，かつこれで区別するので一意であってほしい
 	name: Name;
 	position: Position; // 役職
+	/** 専従 */
+	ward: Ward;
+
 	/** 外来日…なのだが隔週月曜は別に扱う */
 	outPDays: OutPDays;
 
@@ -32,21 +35,19 @@ export class Person {
 	/** E を割り当てられる頻度 */
 	assignE: AssignmentE;
 
-	// 専従
-	ward: Ward;
 
 	constructor(
 		name: Name,
 		p: Position,
-		w: OutPDays = new OutPDays(),
 		ward: Ward = null,
+		w: OutPDays = new OutPDays(),
 		aac?: AssignmentAC,
 		ae?: AssignmentE,
 	) {
 		this.name = name;
 		this.position = p;
-		this.outPDays = w;
 		this.ward = ward;
+		this.outPDays = w;
 
 		// AssignmentAC が特に指定されなければ役職に従う
 		if (aac === undefined) {
