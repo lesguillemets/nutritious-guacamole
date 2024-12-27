@@ -20,7 +20,7 @@ import { parse as parseDate } from "date-fns";
  * @param s: TSV 形式，ヘッダ含む*/
 export function parseMemberListTsv(s: string): Array<Person> | undefined {
 	// Array<[Name, Position, Ward, OutPDays, AssignmentAC, AssignmentE]> を返していたが
-	const lines: Array<string> = s.split("\n");
+	const lines: Array<string> = s.split(/\r?\n/);
 	const ppl: Array<Person> = [];
 	// i=0 は header なので飛ばす
 	for (let i = 1; i < lines.length; i++) {
@@ -39,7 +39,7 @@ export function parseMemberListTsv(s: string): Array<Person> | undefined {
 export function parseDepartmentCalendar(
 	s: string,
 ): Array<[Name, PersonalCalendar]> | undefined {
-	const lines: Array<string> = s.split("\n");
+	const lines: Array<string> = s.split(/\r?\n/);
 	if (lines.length === 0) {
 		return undefined;
 	}
