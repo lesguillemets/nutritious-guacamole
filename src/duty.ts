@@ -19,6 +19,32 @@ export enum WeekEndDuty {
 
 // TODO: Object にしたほうが良い？
 
+/** 実は Duty と string で形を区別した対応ができない
+ * (see: 055a0e56f9dea04fc63c854848b10e3702271516 の子の
+ * department::_genProposedCalendarFormatted();)
+ * ので，ここでまとめてやるしかない感じがする*/
+export function dutyOrStrToShortString(d: Duty | string): string {
+	switch (d) {
+		case WeekDayDuty.A:
+			return "A";
+		case WeekDayDuty.C:
+			return "C";
+		case WeekDayDuty.G:
+			return "外";
+		case WeekDayDuty.W:
+			return "棟";
+		case WeekDayDuty.Leave:
+			return "休";
+		case WeekDayDuty.Other:
+			return "・";
+		case WeekEndDuty.X:
+			return "X";
+		case WeekEndDuty.E:
+			return "E";
+		default:
+			return d;
+	}
+}
 export function dutyToShortString(d: Duty): string {
 	switch (d) {
 		case WeekDayDuty.A:

@@ -1,7 +1,7 @@
 import { format as dateFormat } from "date-fns";
 import { type Name, TableLike } from "./base";
 import type { PersonalCalendar } from "./calendar";
-import { type Duty, dutyToShortString } from "./duty";
+import { type Duty, dutyOrStrToShortString } from "./duty";
 import { parseDepartmentCalendar, parseMemberListTsv } from "./parser";
 import type { Person } from "./person";
 
@@ -106,11 +106,16 @@ export class Department {
 			}
 			return dateFormat(d, "yyyy-MM-dd");
 		};
-		const fmtBody = (d: Duty | Name) => {
-			if (typeof d === "string") {
-				return d;
-			}
-			return dutyToShortString(d);
+		const fmtBody = (d: Duty | Name): string => {
+			// あるいは，@ ts-ignore
+			return dutyOrStrToShortString(d);
+			// return (dutyToShortString(d) || d as string);
+			// FIXME: String enum と string の型レベルの区別ができてない？
+			// ここが other を返してる気配がある
+			// if (typeof d === "string") {
+			// 	return d;
+			// }
+			// return dutyToShortString(d);
 		};
 		return this._genProposedCalendar().formatHead(fmtHead).formatDat(fmtBody);
 	}
@@ -151,11 +156,8 @@ export class Department {
 			}
 			return dateFormat(d, "yyyy-MM-dd");
 		};
-		const fmtBody = (d: Duty | Name) => {
-			if (typeof d === "string") {
-				return d;
-			}
-			return dutyToShortString(d);
+		const fmtBody = (d: Duty | Name): string => {
+			return dutyOrStrToShortString(d);
 		};
 		return this._genProposedCalendar().formatHead(fmtHead).formatDat(fmtBody);
 	}
