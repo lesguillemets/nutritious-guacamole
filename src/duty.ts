@@ -34,7 +34,7 @@ export function dutyToShortString(d: Duty): string {
 		case WeekDayDuty.Other:
 			return "・";
 		case WeekEndDuty.X:
-			return " ";
+			return "X";
 		case WeekEndDuty.E:
 			return "E";
 		default:
@@ -57,11 +57,12 @@ export function shortStringToDuty(s: string): Duty | undefined {
 			return WeekDayDuty.Leave;
 		case "・":
 			return WeekDayDuty.Other;
-		case " ":
+		case "X":
 			return WeekEndDuty.X;
 		case "E":
 			return WeekEndDuty.E;
 		default:
+			console.log(`parsing ${s} as Duty and returning undefined `);
 			return undefined;
 	}
 }

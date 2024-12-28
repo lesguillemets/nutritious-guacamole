@@ -52,6 +52,7 @@ export function parseDepartmentCalendar(
 ): Array<[Name, PersonalCalendar]> | undefined {
 	const lines: Array<string> = s.split(/\r?\n/);
 	if (lines.length === 0) {
+		console.log("parseDepartmentCalendar::lines empty");
 		return undefined;
 	}
 	const header = lines[0].split("\t");
@@ -63,6 +64,9 @@ export function parseDepartmentCalendar(
 	for (const row of lines.slice(1).filter((v) => {
 		return v !== "";
 	})) {
+		if (DEBUG) {
+			console.log("parseDepartmentCalendar::", row);
+		}
 		const dat = row.split("\t");
 		if (dat.length !== dates.length + 1) {
 			console.log("ERROR on parseDepartmentCalendar");
@@ -72,6 +76,9 @@ export function parseDepartmentCalendar(
 		const name = dat[0];
 		// TODO: undefined のキャッチ
 		const duties = dat.slice(1).map((dut) => shortStringToDuty(dut)!);
+		if (DEBUG) {
+			console.log("duties are:" , duties);
+		}
 		// Array<[Date, Duty]> にしてあげる
 		const zipped: Array<[Date, WeekDayDuty | WeekEndDuty]> = dates.map(
 			(d, i) => {
