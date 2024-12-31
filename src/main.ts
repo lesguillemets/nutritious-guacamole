@@ -1,7 +1,7 @@
 import { dateToTimeStampString } from "./base";
 import { Department } from "./department";
 import { OutPDays } from "./outpatient";
-import { parseMemberListTsv } from "./parser";
+import { parseDepartmentCalendar, parseMemberListTsv } from "./parser";
 import { Person } from "./person";
 import { Position } from "./position";
 

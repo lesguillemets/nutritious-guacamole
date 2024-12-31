@@ -33,12 +33,12 @@ export class Department {
 			// const thisCal: PersonalCalendar | undefined = prevCal.find( (c) => {c[0] === name} )?.at(1);
 			const thisCal: [Name, PersonalCalendar] | undefined = prevCal.find(
 				(c) => {
-					c[0] === name;
+					return c[0] === name;
 				},
 			);
 			const history: [Name, PersonalCalendar] | undefined = depHistory.find(
 				(c) => {
-					c[0] === name;
+					return c[0] === name;
 				},
 			);
 			if (thisCal !== undefined) {
