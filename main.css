@@ -8,6 +8,18 @@ body,html {
 	padding:0;
 }
 
+table {
+	font-size:10px;
+}
+
+td, th {
+	max-width:3em;
+	text-align:center;
+}
+tr,td,th {
+	max-height:2em;
+}
+
 .container {
 	width: 100vw;
 	height:100vh;
