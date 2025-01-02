@@ -1,5 +1,6 @@
 import { AssignmentAC, AssignmentE } from "./assignment";
-import { type Name, TableLike, type Ward } from "./base";
+import { type Name, type Ward } from "./base";
+import { TableLike } from "./TableLike";
 import { PersonalCalendar } from "./calendar";
 import { Department } from "./department";
 import {

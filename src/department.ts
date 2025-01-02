@@ -1,5 +1,6 @@
 import { format as dateFormat } from "date-fns";
-import { type Name, TableLike } from "./base";
+import { type Name } from "./base";
+import { TableLike } from "./TableLike";
 import type { PersonalCalendar } from "./calendar";
 import { type Duty, dutyOrStrToShortString } from "./duty";
 import { parseDepartmentCalendar, parseMemberListTsv } from "./parser";
