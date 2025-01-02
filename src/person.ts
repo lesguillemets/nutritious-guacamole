@@ -25,6 +25,9 @@ export class Person {
 	/** 今回のクールの割り当て．後から変更がありうるので別枠で覚えておく */
 	proposed: PersonalCalendar = new PersonalCalendar();
 
+	/** 直近のクールの割り当て．後から変更がありうるので別枠で覚えておく */
+	current: PersonalCalendar = new PersonalCalendar();
+
 	/** シフト履歴，とりあえずクールごとにまとめた配列にしてみますか */
 	history: Array<PersonalCalendar> = new Array();
 	// 平日・休日のシフト履歴別に持ってもいいかも…と思ったが

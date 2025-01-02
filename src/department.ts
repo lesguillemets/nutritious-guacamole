@@ -39,7 +39,7 @@ export class Department {
 				},
 			);
 			if (thisCal !== undefined) {
-				m.proposed = thisCal[1];
+				m.current = thisCal[1];
 			}
 			const history: [Name, PersonalCalendar] | undefined = depHistory.find(
 				(c) => {
@@ -90,11 +90,11 @@ export class Department {
 			// if noone is here, return none
 			return new TableLike([]);
 		}
-		const dates: Array<Date> = this.ppl[0].proposed.getDays();
+		const dates: Array<Date> = this.ppl[0].current.getDays();
 		const header = [null, ...dates];
 		const body = [];
 		for (const p of this.ppl) {
-			const duties = p.proposed.getDuties();
+			const duties = p.current.getDuties();
 			body.push([p.name, ...duties]);
 		}
 		return new TableLike(body, header);
