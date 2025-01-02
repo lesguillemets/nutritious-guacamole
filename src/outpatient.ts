@@ -41,6 +41,7 @@ export class OutPDays {
 				// Sun(1,3週) とかじゃなくて Sun のとき
 				slots.push([d0!, null]);
 			} else {
+				// FIXME: ここ文字数でハードコードしてるので，英文和文を決めたら修正が必要
 				const day = DayofWeek.fromString(sl.slice(0, 3))!; // Mon とか
 				const weeks: Array<number> = sl
 					.slice(4)

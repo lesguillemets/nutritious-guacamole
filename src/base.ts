@@ -16,18 +16,25 @@ export namespace DayofWeek {
 	export function fromString(s: string): DayofWeek | undefined {
 		switch (s) {
 			case "Sun":
+			case "日":
 				return DayofWeek.Sun;
 			case "Mon":
+			case "月":
 				return DayofWeek.Mon;
 			case "Tue":
+			case "火":
 				return DayofWeek.Tue;
 			case "Wed":
+			case "水":
 				return DayofWeek.Wed;
 			case "Thu":
+			case "木":
 				return DayofWeek.Thu;
 			case "Fri":
+			case "金":
 				return DayofWeek.Fri;
 			case "Sat":
+			case "土":
 				return DayofWeek.Sat;
 			default:
 				console.log(
@@ -36,6 +43,18 @@ export namespace DayofWeek {
 				return undefined;
 		}
 		// return(DayofWeek[s as keyof typeof DayofWeek]);
+	}
+
+	export function toJapanese(d: DayofWeek): string {
+		return {
+			Sun: "日",
+			Mon: "月",
+			Tue: "火",
+			Wed: "水",
+			Thu: "木",
+			Fri: "金",
+			Sat: "土",
+		}[DayofWeek[d]]!;
 	}
 }
 
@@ -65,6 +84,7 @@ export class TableLike<T, U> {
 		this.header = header;
 	}
 
+	/** Dat をフォーマットする関数を受け取ってそのようにしたものを返す */
 	formatDat(fmt: (d: T) => string): TableLike<string, U> {
 		const d: Array<Array<string>> = [];
 		for (const row of this.dat) {
@@ -73,6 +93,7 @@ export class TableLike<T, U> {
 		return new TableLike(d, this.header);
 	}
 
+	/** Head をフォーマットする関数を受け取ってそのようにしたものを返す */
 	formatHead(fmt: (d: U) => string): TableLike<T, string> {
 		const newHeader = this.header === null ? null : this.header.map(fmt);
 		return new TableLike(this.dat, newHeader);

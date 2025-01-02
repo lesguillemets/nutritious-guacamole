@@ -17,6 +17,7 @@ export class Department {
 		this.ppl.sort((a, b) => a.cmp(b));
 	}
 
+	/** memberList, prevHist, otherdata の3つの string から Department を返す */
 	static fromStrings(
 		memberList: string,
 		prevShift: string,
@@ -36,14 +37,14 @@ export class Department {
 					return c[0] === name;
 				},
 			);
+			if (thisCal !== undefined) {
+				m.proposed = thisCal[1];
+			}
 			const history: [Name, PersonalCalendar] | undefined = depHistory.find(
 				(c) => {
 					return c[0] === name;
 				},
 			);
-			if (thisCal !== undefined) {
-				m.proposed = thisCal[1];
-			}
 			if (history !== undefined) {
 				m.history.push(history[1]);
 			}
@@ -84,7 +85,6 @@ export class Department {
 	 * 最初の行が [null, Date, Date, 本体は [Name, Duty, Duty...]
 	 * */
 	_genProposedCalendar(): TableLike<Duty | Name, Date | null> {
-		// FIXME: not yet confirmed
 		if (this.ppl.length === 0) {
 			// if noone is here, return none
 			return new TableLike([]);
@@ -156,6 +156,8 @@ export class Department {
 			}
 			return dateFormat(d, "yyyy-MM-dd");
 		};
+		// ここで d が string になるなら，duty::shortStringToDuty で
+		// 区分けができる．
 		const fmtBody = (d: Duty | Name): string => {
 			return dutyOrStrToShortString(d);
 		};

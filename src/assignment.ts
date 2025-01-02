@@ -14,6 +14,7 @@ export enum AssignmentE {
 	Regular = "regular",
 }
 
+/** ポジションごとのデフォルトの Assignment を返す */
 export function posToAssignmentAC(pos: Position): AssignmentAC {
 	if (pos === Position.Chief) {
 		return AssignmentAC.BiWeekly;
@@ -24,6 +25,7 @@ export function posToAssignmentAC(pos: Position): AssignmentAC {
 	return AssignmentAC.None;
 }
 
+/** ポジションごとのデフォルトの Assignment を返す */
 export function posToAssignmentE(pos: Position): AssignmentE {
 	if (pos === Position.Chief) {
 		return AssignmentE.Half;

@@ -4,7 +4,9 @@ import type { WeekDayDuty, WeekEndDuty } from "./duty";
 
 import { differenceInDays } from "date-fns";
 
+/** [日，その日の業務] の Array. */
 type DateDutyArray = Array<[Date, WeekDayDuty | WeekEndDuty]>;
+
 /** 個々人の予定表．*/
 export class PersonalCalendar {
 	/** @type {Array<[Date, WeekDayDuty|WeekEndDuty]>} */
@@ -29,9 +31,11 @@ export class PersonalCalendar {
 		return [firstDay, lastDay];
 	}
 
+	/** カレンダーに含まれる Date のリスト */
 	getDays(): Array<Date> {
 		return this.cal.map((dd) => dd[0]);
 	}
+	/** カレンダーに含まれる Duties だけ のリスト */
 	getDuties(): Array<WeekDayDuty | WeekEndDuty> {
 		return this.cal.map((dd) => dd[1]);
 	}

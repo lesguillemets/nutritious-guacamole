@@ -77,7 +77,7 @@ export function parseDepartmentCalendar(
 		// TODO: undefined のキャッチ
 		const duties = dat.slice(1).map((dut) => shortStringToDuty(dut)!);
 		if (DEBUG) {
-			console.log("duties are:" , duties);
+			console.log("duties are:", duties);
 		}
 		// Array<[Date, Duty]> にしてあげる
 		const zipped: Array<[Date, WeekDayDuty | WeekEndDuty]> = dates.map(

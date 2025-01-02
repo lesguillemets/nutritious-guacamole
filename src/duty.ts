@@ -1,13 +1,12 @@
-/** 平日のお仕事の区分 */
-
 export type Duty = WeekDayDuty | WeekEndDuty;
 
+/** 平日のお仕事の区分 */
 export enum WeekDayDuty {
 	A = "A",
 	C = "C",
 	G = "外来", // TODO: 外来ここに含めるのは変？
 	W = "病棟専従",
-	Leave = "Leave", // 休暇の設定は別枠で必要な気がする
+	Leave = "休", // 休暇の設定は別枠で必要な気がする
 	Other = "Other", // 現実的には B か F
 }
 
@@ -21,8 +20,10 @@ export enum WeekEndDuty {
 
 /** 実は Duty と string で形を区別した対応ができない
  * (see: 055a0e56f9dea04fc63c854848b10e3702271516 の子の
- * department::_genProposedCalendarFormatted();)
- * ので，ここでまとめてやるしかない感じがする*/
+ * department::_genProposedCalendarFormatted();)．
+ * 一報，Duty | string が流れてきてしまうのは今のところ
+ * TableLike の設計が微妙に変だから．
+ * ので，ここでまとめてやるのが一周回ってシンプルかもしれん． */
 export function dutyOrStrToShortString(d: Duty | string): string {
 	switch (d) {
 		case WeekDayDuty.A:
@@ -45,6 +46,8 @@ export function dutyOrStrToShortString(d: Duty | string): string {
 			return d;
 	}
 }
+
+/** 表で使う用の一文字表現 */
 export function dutyToShortString(d: Duty): string {
 	switch (d) {
 		case WeekDayDuty.A:
@@ -63,9 +66,6 @@ export function dutyToShortString(d: Duty): string {
 			return "X";
 		case WeekEndDuty.E:
 			return "E";
-		default:
-			console.log("dutyToShortString::unreachable");
-			return "!!!!!!!";
 	}
 }
 
