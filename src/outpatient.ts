@@ -2,7 +2,16 @@ import { DayofWeek } from "./base";
 
 const DEBUG = true;
 
-/** 外来業務 */
+/** 特定の週だけのとき，Wed(1;3週) みたいに書く
+ * そのセパレータ．csv にしたい可能性があるから
+ * , を避ける． */
+const OPWeekSepChar = ";";
+
+/** 外来業務
+ * [曜日, [第n週]] (1-indexed) という形式にした．
+ * 例えば毎週月曜・1・3週木曜なら
+ * [[DayofWeek.Mon, null], [hayofWeek.Thu, [1,3]]
+ * */
 export class OutPDays {
 	// [曜日, [第n週]] (1-indexed) という形式にした．
 	// FIXME: 0-indexed のほうが統一性がある？
@@ -15,7 +24,7 @@ export class OutPDays {
 	}
 
 	/** 見やすいstring に；
-	 * Mon・Thu(1,3週)  みたいな*/
+	 * Mon・Thu(1;3週)  みたいな*/
 	toString(): string {
 		const result: Array<string> = [];
 		for (const sl of this.slots) {
@@ -23,7 +32,7 @@ export class OutPDays {
 			if (sl[1] === null) {
 				result.push(dayName);
 			} else {
-				const weeks = sl[1].join(",");
+				const weeks = sl[1].join(";");
 				result.push(`${dayName}(${weeks}週)`);
 			}
 		}
@@ -46,7 +55,7 @@ export class OutPDays {
 				const weeks: Array<number> = sl
 					.slice(4)
 					.slice(0, -2)
-					.split(",")
+					.split(";")
 					.map((n) => Number.parseInt(n, 10));
 				slots.push([day, weeks]);
 			}
